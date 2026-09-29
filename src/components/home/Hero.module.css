@@ -1,0 +1,119 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-h) + var(--s-8));
+  padding-bottom: clamp(3.5rem, 11vh, 9rem);
+  overflow: clip;
+  isolation: isolate;
+}
+
+/* --- The drawing ---------------------------------------------------------
+   The mark's outline at architectural scale. Cropped by the viewport so
+   that it reads as structure, not as a logo. */
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.drawing {
+  position: absolute;
+  width: max(172vw, 1500px);
+  height: auto;
+  left: -18vw;
+  top: 50%;
+  transform: translateY(-62%);
+  color: rgb(236 235 231 / 0.11);
+}
+
+.drawing path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: construct var(--dur-5) var(--ease-in-out) 150ms both;
+}
+
+/* On narrow screens the drawing is re-framed on the crossing of the N,
+   rather than shrinking the whole figure into a recognisable logo. */
+@media (max-width: 719px) {
+  .drawing {
+    width: 310vw;
+    left: -118vw;
+    transform: translateY(-66%);
+  }
+}
+
+@keyframes construct {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* --- Statement ---------------------------------------------------------- */
+
+.inner {
+  position: relative;
+}
+
+.title {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  font-weight: var(--fw-medium);
+  text-wrap: initial;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.line > span {
+  display: inline-block;
+  animation: rise var(--dur-4) var(--ease-out) both;
+}
+
+.line:nth-child(1) > span {
+  animation-delay: 450ms;
+}
+
+.line:nth-child(2) > span {
+  animation-delay: 620ms;
+}
+
+/* The rejected idea is dim. The claim is lit. */
+.dim {
+  color: var(--c-text-3);
+}
+
+.bright {
+  color: var(--c-paper);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(104%);
+  }
+}
+
+.lead {
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+  max-width: 30ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  letter-spacing: var(--tr-lead);
+  color: var(--c-text-1);
+  animation: appear var(--dur-4) var(--ease-out) 1250ms both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}

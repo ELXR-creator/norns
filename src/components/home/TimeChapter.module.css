@@ -1,0 +1,53 @@
+.time {
+  padding-block: clamp(6rem, 18vh, 14rem) clamp(4rem, 10vh, 8rem);
+}
+
+.list {
+  display: grid;
+  row-gap: clamp(9rem, 30vh, 20rem);
+}
+
+.moment {
+  display: grid;
+  justify-self: start;
+  row-gap: var(--s-5);
+}
+
+.when {
+  display: flex;
+  gap: var(--s-4);
+  transition: color var(--dur-4) var(--ease-standard);
+}
+
+.ordinal {
+  color: var(--c-text-3);
+}
+
+.line {
+  font-size: clamp(2.375rem, 0.8rem + 4.9vw, 6.5rem);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-display);
+  color: var(--c-paper);
+  transition: color var(--dur-4) var(--ease-standard);
+}
+
+/* Once the band is tracking, only the present is lit. */
+[data-focus-ready] .moment:not([data-present]) .line {
+  color: var(--c-text-3);
+}
+
+[data-focus-ready] .moment:not([data-present]) .when {
+  color: var(--c-text-3);
+}
+
+/* Past sits at the left edge, the future at the right: reading the chapter
+   carries the eye across the page, the way time carries the work. */
+@media (min-width: 720px) {
+  .moment:nth-child(2) {
+    justify-self: center;
+  }
+
+  .moment:nth-child(3) {
+    justify-self: end;
+  }
+}

@@ -1,0 +1,60 @@
+.work {
+  padding-block: var(--section-y);
+}
+
+.head {
+  display: grid;
+  row-gap: var(--s-5);
+  margin-bottom: clamp(4rem, 10vh, 8rem);
+}
+
+.title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+}
+
+.note {
+  max-width: 30ch;
+  color: var(--c-text-2);
+}
+
+.slots {
+  display: grid;
+  row-gap: clamp(4rem, 12vh, 9rem);
+}
+
+@media (min-width: 1024px) {
+  .head {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    align-items: end;
+  }
+
+  .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .title {
+    grid-column: 1 / span 7;
+  }
+
+  .note {
+    grid-column: 9 / span 4;
+    padding-bottom: 0.4em;
+  }
+
+  .slots {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  /* Equal in size, offset in position: two worlds, neither above the other. */
+  .item:nth-child(odd) {
+    grid-column: 1 / span 10;
+  }
+
+  .item:nth-child(even) {
+    grid-column: 3 / span 10;
+  }
+}

@@ -1,0 +1,279 @@
+/* --- Bar ---------------------------------------------------------------- */
+
+.bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-nav);
+  pointer-events: none;
+}
+
+/* A soft shade rather than a surface: the bar never becomes chrome. */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -2.5rem;
+  background: linear-gradient(to bottom, rgb(10 11 14 / 0.88), rgb(10 11 14 / 0.6) 45%, rgb(10 11 14 / 0));
+  transition: opacity var(--dur-2) var(--ease-standard);
+  pointer-events: none;
+}
+
+.bar[data-open] {
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+.bar[data-open]::before {
+  opacity: 0;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+}
+
+.identity {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  min-width: 0;
+  pointer-events: auto;
+}
+
+.wordmark {
+  font-size: 1.125rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding-block: 0.75rem;
+}
+
+.chapter {
+  display: inline-flex;
+  gap: 0.9rem;
+  font-size: var(--fs-small);
+  color: var(--c-text-2);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  animation: chapter-in var(--dur-3) var(--ease-out) both;
+}
+
+.slash {
+  color: var(--c-text-4);
+}
+
+@keyframes chapter-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+}
+
+/* --- Toggle ------------------------------------------------------------- */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  margin-right: -0.5rem;
+  padding: 0 0.5rem;
+  font-size: var(--fs-small);
+  letter-spacing: -0.005em;
+  color: var(--c-paper);
+  pointer-events: auto;
+}
+
+/* The + turns to ×: a quarter of a turn, the only rotation on the site,
+   because it states exactly what changed. */
+.glyph {
+  position: relative;
+  width: 0.7rem;
+  height: 0.7rem;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.glyph::before,
+.glyph::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: var(--hairline);
+  background: currentColor;
+}
+
+.glyph::after {
+  transform: rotate(90deg);
+}
+
+.toggle[aria-expanded="true"] .glyph {
+  transform: rotate(45deg);
+}
+
+/* --- Overlay ------------------------------------------------------------ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--c-void);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path var(--dur-3) var(--ease-in-out),
+    visibility 0s linear var(--dur-3);
+}
+
+.overlay[data-open] {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition:
+    clip-path var(--dur-3) var(--ease-in-out),
+    visibility 0s;
+}
+
+.overlayInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: calc(var(--nav-h) + clamp(2rem, 8vh, 6rem));
+  padding-bottom: var(--s-6);
+  overflow-y: auto;
+}
+
+.overlayNav {
+  flex: 1;
+}
+
+.list {
+  border-top: var(--hairline) solid var(--c-line);
+}
+
+.item {
+  border-bottom: var(--hairline) solid var(--c-line);
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity var(--dur-2) var(--ease-standard),
+    transform var(--dur-2) var(--ease-standard);
+}
+
+.overlay[data-open] .item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-out);
+  transition-delay: calc(200ms + var(--i) * 50ms);
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 1fr) 11fr;
+  align-items: baseline;
+  column-gap: var(--col-gap);
+  padding-block: clamp(0.5rem, 1.4vh, 1.1rem);
+}
+
+.number {
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.label {
+  font-size: clamp(2.75rem, 1.4rem + 5.6vw, 7rem);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tr-display);
+  line-height: 1;
+  color: var(--c-text-1);
+  transition:
+    color var(--dur-2) var(--ease-standard),
+    transform var(--dur-3) var(--ease-out);
+}
+
+.entry:hover .label,
+.entry:focus-visible .label {
+  color: var(--c-paper);
+  transform: translateX(0.12em);
+}
+
+.entry:hover .number,
+.entry:focus-visible .number {
+  color: var(--c-paper);
+}
+
+/* Dim the others while one is chosen. */
+.list:hover .entry:not(:hover) .label {
+  color: var(--c-text-3);
+}
+
+.overlayFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s-5);
+  padding-top: var(--s-7);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-standard);
+}
+
+.overlay[data-open] .overlayFoot {
+  opacity: 1;
+  transition: opacity var(--dur-4) var(--ease-out) 420ms;
+}
+
+.statement {
+  max-width: 22rem;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--c-text-2);
+}
+
+.statement span {
+  display: block;
+}
+
+.statement span + span {
+  color: var(--c-paper);
+}
+
+@media (min-width: 720px) {
+  .entry {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .number {
+    grid-column: 1 / span 2;
+  }
+
+  .label {
+    grid-column: 3 / span 7;
+  }
+}
+
+.note {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .note {
+    display: block;
+    grid-column: 10 / -1;
+    justify-self: end;
+    color: var(--c-text-3);
+    transition: color var(--dur-2) var(--ease-standard);
+  }
+
+  .entry:hover .note,
+  .entry:focus-visible .note {
+    color: var(--c-text-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter {
+    display: none;
+  }
+}

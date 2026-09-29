@@ -1,0 +1,408 @@
+/* ==========================================================================
+   Norns — foundation
+   Every value used by the site is declared here first. Components compose
+   these tokens; they do not invent their own.
+   ========================================================================== */
+
+:root {
+  /* --- Colour -------------------------------------------------------------
+     The parent brand is monochrome. The ground is derived from the ink of
+     the Norns mark itself (#181B22): a cool graphite near-black.
+     Colour belongs to the products, not to Norns. */
+  --c-void: #060709;
+  --c-ground: #0a0b0e;
+  --c-raised: #0f1115;
+  --c-graphite: #181b22; /* the mark's own ink */
+  --c-line: #1d2028;
+  --c-line-strong: #2b2f38;
+
+  --c-paper: #ecebe7; /* primary text, soft off-white */
+  --c-text-1: #c8cacf;
+  --c-text-2: #8c919b; /* muted body — 6.4:1 on ground */
+  --c-text-3: #5f646e; /* dimmed display type only (large) */
+  --c-text-4: #3a3e47; /* receded display type, decoration */
+
+  --c-focus: var(--c-paper);
+  --c-selection: #2b2f38;
+
+  /* --- Type --------------------------------------------------------------- */
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Fluid scale. Display sizes are deliberately large; body stays calm. */
+  --fs-display: clamp(3rem, 0.9rem + 6.6vw, 8.75rem);
+  --fs-h1: clamp(2.375rem, 0.95rem + 5.6vw, 7.5rem);
+  --fs-h2: clamp(2rem, 1rem + 3.6vw, 5rem);
+  --fs-h3: clamp(1.5rem, 1.05rem + 1.7vw, 2.625rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.45vw, 1.4375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-meta: 0.71875rem;
+
+  --lh-display: 0.94;
+  --lh-heading: 1.02;
+  --lh-lead: 1.42;
+  --lh-body: 1.6;
+
+  --tr-display: -0.042em;
+  --tr-heading: -0.032em;
+  --tr-lead: -0.012em;
+  --tr-meta: 0.09em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+
+  /* --- Space --------------------------------------------------------------
+     4px base. Section rhythm scales with the viewport so large screens
+     breathe and small screens do not become endless. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  --section-y: clamp(7rem, 4rem + 14vh, 15rem);
+  --section-y-quiet: clamp(10rem, 5rem + 22vh, 22rem);
+
+  /* --- Layout ------------------------------------------------------------- */
+  --page-max: 1680px;
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+  --col-gap: clamp(1rem, 0.5rem + 1.4vw, 2rem);
+  --measure: 34rem; /* comfortable reading column */
+  --nav-h: 4.5rem;
+
+  /* --- Geometry derived from the mark ------------------------------------
+     The diagonals of the Norns mark run at ~43°. Used, sparingly, wherever
+     the page needs a direction of its own. */
+  --mark-angle: 43deg;
+  --hairline: 1px;
+
+  /* --- Motion -------------------------------------------------------------
+     Nothing moves unless the movement communicates change. */
+  --dur-2: 320ms; /* interface */
+  --dur-3: 640ms; /* reveal */
+  --dur-4: 1100ms; /* statement */
+  --dur-5: 2600ms; /* construction */
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* --- Layers ------------------------------------------------------------- */
+  --z-nav: 50;
+  --z-overlay: 40;
+  --z-skip: 100;
+
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--c-ground);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--c-ground);
+  color: var(--c-paper);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "calt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--fw-medium);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+svg {
+  display: block;
+}
+
+::selection {
+  background: var(--c-selection);
+  color: var(--c-paper);
+}
+
+:focus-visible {
+  outline: var(--hairline) solid var(--c-focus);
+  outline-offset: 6px;
+  border-radius: 1px;
+}
+
+:target {
+  scroll-margin-top: var(--nav-h);
+}
+
+/* ==========================================================================
+   Primitives
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Institutional metadata: indices, statuses, labels. */
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  line-height: 1.4;
+  letter-spacing: var(--tr-meta);
+  text-transform: uppercase;
+  color: var(--c-text-2);
+  font-weight: var(--fw-regular);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--s-3);
+  left: var(--s-3);
+  z-index: var(--z-skip);
+  padding: var(--s-3) var(--s-4);
+  background: var(--c-paper);
+  color: var(--c-ground);
+  font-size: var(--fs-small);
+  transform: translateY(-200%);
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline-color: var(--c-paper);
+}
+
+/* Text link: a hairline that is drawn in, not blinked on. */
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  color: var(--c-paper);
+  padding-block: 0.2em;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% var(--hairline);
+  transition: background-size var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-standard);
+}
+
+.link:hover {
+  background-size: 0% var(--hairline);
+  background-position: 100% 100%;
+}
+
+.link .arrow {
+  display: inline-block;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.link:hover .arrow {
+  transform: translate(0.12em, -0.12em);
+}
+
+.link:hover .arrow--right {
+  transform: translateX(0.2em);
+}
+
+/* ==========================================================================
+   Reveal
+   Content is visible by default. Only once the client has confirmed it can
+   reveal things (html.reveal-ready) is anything held back — so a failed
+   script never hides the page.
+   ========================================================================== */
+
+.reveal-ready [data-reveal] {
+  transition:
+    opacity var(--dur-4) var(--ease-out),
+    transform var(--dur-4) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+.reveal-ready [data-reveal="fade"]:not([data-revealed]) {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-ready [data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+}
+
+/* While the Index is open the page behind holds still. */
+html[data-index-open] {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+/* Programmatic focus targets (sections reached from the Index). */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* ==========================================================================
+   Plain pages — legal, 404, other long-form text
+   ========================================================================== */
+
+.plain {
+  padding-block: calc(var(--nav-h) + clamp(4rem, 14vh, 9rem)) var(--section-y);
+  min-height: 80vh;
+}
+
+.plain__layout {
+  display: grid;
+  row-gap: var(--s-8);
+}
+
+.plain__head {
+  display: grid;
+  row-gap: var(--s-4);
+  align-content: start;
+}
+
+.plain__title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+}
+
+.plain__body {
+  max-width: var(--measure);
+  color: var(--c-text-1);
+}
+
+.plain__body h2 {
+  margin: var(--s-7) 0 var(--s-3);
+  font-size: var(--fs-body);
+  letter-spacing: -0.01em;
+  color: var(--c-paper);
+}
+
+.plain__body h2:first-child {
+  margin-top: 0;
+}
+
+.plain__body .link {
+  display: inline;
+  padding: 0 0 0.1em;
+}
+
+.plain__body p + p {
+  margin-top: var(--s-4);
+}
+
+@media (min-width: 1024px) {
+  .plain__layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .plain__head {
+    grid-column: 1 / span 5;
+  }
+
+  .plain__body {
+    grid-column: 7 / span 5;
+    padding-top: 2.1rem;
+  }
+}

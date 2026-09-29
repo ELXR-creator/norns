@@ -1,0 +1,119 @@
+.slot {
+  display: grid;
+  row-gap: var(--s-4);
+}
+
+/* --- Frame --------------------------------------------------------------
+   The reserved area. Its only texture is a hatch cut at the angle of the
+   mark's diagonals — the drafting convention for space held for
+   something that is not drawn yet. */
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--u-ground, var(--c-raised));
+  border: var(--hairline) solid var(--c-line);
+}
+
+.slot[data-visibility="private"] .frame {
+  background-image: repeating-linear-gradient(
+    var(--mark-angle),
+    transparent 0 15px,
+    rgb(236 235 231 / 0.045) 15px 16px
+  );
+}
+
+/* Registration marks at each corner, as on a drawing. */
+.corners,
+.corners::before,
+.corners::after {
+  position: absolute;
+  inset: var(--s-4);
+  pointer-events: none;
+}
+
+.corners {
+  --tick: 0.75rem;
+  background:
+    linear-gradient(var(--c-text-3), var(--c-text-3)) top left / var(--tick) var(--hairline),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) top left / var(--hairline) var(--tick),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) top right / var(--tick) var(--hairline),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) top right / var(--hairline) var(--tick),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) bottom left / var(--tick) var(--hairline),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) bottom left / var(--hairline) var(--tick),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) bottom right / var(--tick) var(--hairline),
+    linear-gradient(var(--c-text-3), var(--c-text-3)) bottom right / var(--hairline) var(--tick);
+  background-repeat: no-repeat;
+}
+
+.reserved {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: var(--s-2) var(--s-3);
+  background: var(--c-raised);
+  color: var(--c-text-2);
+  white-space: nowrap;
+}
+
+.visual {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Caption ------------------------------------------------------------ */
+
+.caption {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  column-gap: var(--s-6);
+  align-items: baseline;
+}
+
+.status {
+  color: var(--c-paper);
+}
+
+.year {
+  color: var(--c-text-3);
+}
+
+/* Public entries: the product's own voice inside the Norns frame. */
+.slot[data-visibility="public"] .caption {
+  grid-template-columns: 1fr;
+  row-gap: var(--s-3);
+}
+
+.name {
+  font-family: var(--u-font);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  color: var(--c-paper);
+}
+
+.summary {
+  max-width: var(--measure);
+  color: var(--c-text-2);
+}
+
+.enter {
+  justify-self: start;
+  margin-top: var(--s-2);
+}
+
+@media (min-width: 720px) {
+  .frame {
+    aspect-ratio: 2 / 1;
+  }
+
+  .corners {
+    --tick: 1rem;
+    inset: var(--s-5);
+  }
+}

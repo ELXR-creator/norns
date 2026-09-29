@@ -1,0 +1,71 @@
+.company {
+  padding-block: var(--section-y);
+}
+
+.layout {
+  display: grid;
+  row-gap: var(--s-6);
+}
+
+.body {
+  display: grid;
+  row-gap: clamp(2rem, 5vh, 3rem);
+}
+
+.title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  max-width: 18ch;
+}
+
+.text {
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  letter-spacing: var(--tr-lead);
+  color: var(--c-text-1);
+}
+
+.facts {
+  display: grid;
+  margin-top: var(--s-5);
+  border-top: var(--hairline) solid var(--c-line);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  column-gap: var(--s-5);
+  align-items: baseline;
+  padding-block: var(--s-4);
+  border-bottom: var(--hairline) solid var(--c-line);
+}
+
+.fact dt {
+  color: var(--c-text-3);
+}
+
+.fact dd {
+  color: var(--c-text-1);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .eyebrow {
+    grid-column: 1 / span 3;
+    padding-top: 1.1em;
+  }
+
+  .body {
+    grid-column: 4 / span 8;
+  }
+
+  .facts {
+    max-width: 36rem;
+  }
+}

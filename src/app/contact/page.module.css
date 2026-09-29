@@ -1,0 +1,55 @@
+.contact {
+  padding-block: calc(var(--nav-h) + clamp(4rem, 14vh, 9rem)) var(--section-y);
+  min-height: 100vh;
+}
+
+.layout {
+  display: grid;
+  row-gap: clamp(3.5rem, 9vh, 6rem);
+}
+
+.head {
+  display: grid;
+  row-gap: var(--s-5);
+  align-content: start;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  max-width: 14ch;
+}
+
+.note {
+  max-width: 28ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  color: var(--c-text-2);
+}
+
+.direct {
+  display: grid;
+  justify-items: start;
+  row-gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .head {
+    grid-column: 1 / span 5;
+    position: sticky;
+    top: calc(var(--nav-h) + var(--s-6));
+    align-self: start;
+  }
+
+  .layout > form {
+    grid-column: 7 / span 6;
+    padding-top: 2.1rem;
+  }
+}

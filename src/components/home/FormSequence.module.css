@@ -1,0 +1,128 @@
+/* --- Static form (no script, or reduced motion) ------------------------- */
+
+.sequence {
+  padding-block: var(--section-y);
+}
+
+.frame {
+  display: grid;
+  row-gap: var(--s-6);
+}
+
+.head {
+  display: none;
+}
+
+.words {
+  display: grid;
+  row-gap: 0.1em;
+  font-size: clamp(2.75rem, 0.5rem + 11.2vw, 13rem);
+  line-height: 1;
+  letter-spacing: var(--tr-display);
+  font-weight: var(--fw-medium);
+  color: var(--c-text-3);
+}
+
+.resolution {
+  margin-top: 0.4em;
+  font-size: 0.5em;
+  line-height: var(--lh-heading);
+  color: var(--c-paper);
+  text-wrap: balance;
+}
+
+.progress {
+  display: none;
+}
+
+/* --- Staged form --------------------------------------------------------
+   The runway gives each step roughly two-thirds of a screen of scroll —
+   long enough to read, short enough never to feel held. */
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(.js) .sequence {
+    height: calc(var(--steps) * 65vh + 100vh);
+    padding: 0;
+  }
+
+  :global(.js) .stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.js) .frame {
+    height: 100%;
+    grid-template-rows: auto 1fr auto;
+    padding-top: calc(var(--nav-h) + var(--s-6));
+    padding-bottom: var(--s-7);
+  }
+
+  :global(.js) .head {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--s-4);
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  :global(.js) .counter {
+    color: var(--c-text-3);
+  }
+
+  :global(.js) .current {
+    color: var(--c-paper);
+  }
+
+  /* Every word occupies the same cell; only one is present at a time. */
+  :global(.js) .words {
+    align-self: center;
+    grid-template-areas: "word";
+    color: var(--c-paper);
+  }
+
+  :global(.js) .word {
+    grid-area: word;
+    align-self: center;
+    opacity: 0;
+    transform: translateY(0.18em);
+    clip-path: inset(0 0 100% 0);
+    transition:
+      opacity var(--dur-3) var(--ease-out),
+      transform var(--dur-3) var(--ease-out),
+      clip-path var(--dur-3) var(--ease-out);
+  }
+
+  :global(.js) .word[data-state="past"] {
+    transform: translateY(-0.18em);
+    clip-path: inset(100% 0 0 0);
+  }
+
+  :global(.js) .word[data-state="active"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(-0.2em 0 -0.2em 0);
+  }
+
+  :global(.js) .resolution {
+    margin-top: 0;
+  }
+
+  :global(.js) .progress {
+    display: grid;
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+    gap: var(--s-2);
+  }
+
+  :global(.js) .tick {
+    height: var(--hairline);
+    background: var(--c-line-strong);
+    transition: background-color var(--dur-3) var(--ease-standard);
+  }
+
+  :global(.js) .tick[data-on] {
+    background: var(--c-paper);
+  }
+}

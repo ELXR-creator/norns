@@ -1,0 +1,79 @@
+.final {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: var(--section-y);
+  background: linear-gradient(to bottom, var(--c-ground), var(--c-void) 35%);
+}
+
+.inner {
+  display: grid;
+  justify-items: center;
+  row-gap: clamp(3rem, 9vh, 6rem);
+}
+
+/* The two states of the mark share one box: the drawing and the built form. */
+.mark {
+  display: grid;
+  width: min(72vw, 38rem);
+}
+
+.contour,
+.solid {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+}
+
+.contour {
+  color: rgb(236 235 231 / 0.22);
+}
+
+.solid {
+  color: var(--c-paper);
+}
+
+.title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  text-align: center;
+}
+
+/* --- Construction -------------------------------------------------------
+   Once revealed: the outline is drawn, then the form fills from left to
+   right, then the drawing is no longer needed. */
+
+:global(.reveal-ready) .mark .contour path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+:global(.reveal-ready) .mark .solid {
+  clip-path: inset(0 100% 0 0);
+}
+
+:global(.reveal-ready) .mark[data-revealed] .contour path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--dur-5) var(--ease-in-out);
+}
+
+:global(.reveal-ready) .mark[data-revealed] .contour {
+  opacity: 0;
+  transition: opacity var(--dur-4) var(--ease-standard) 3400ms;
+}
+
+:global(.reveal-ready) .mark[data-revealed] .solid {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1800ms var(--ease-in-out) 1100ms;
+}
+
+/* The statement arrives once the mark is complete. */
+:global(.reveal-ready) .mark:not([data-revealed]) ~ .title {
+  opacity: 0;
+}
+
+:global(.reveal-ready) .mark[data-revealed] ~ .title {
+  transition: opacity var(--dur-4) var(--ease-standard) 2700ms;
+}
