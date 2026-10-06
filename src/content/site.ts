@@ -31,9 +31,26 @@ export const index: NavItem[] = [
 ];
 
 /**
- * External profiles. Leave empty until they exist; the footer only renders
- * what is listed here.
+ * Profiles elsewhere. Paste a URL to publish one; an empty string keeps it
+ * off the site, so nothing ever links to a profile that does not exist.
+ * Order here is the order in the footer.
+ *
+ * Deliberately absent: Fiverr and bidding marketplaces — they signal
+ * low-cost gig work and undercut the Norns positioning.
  */
-export const elsewhere: NavItem[] = [];
+export const profiles = {
+  linkedin: { label: "LinkedIn", href: "" },
+  github: { label: "GitHub", href: "" },
+  upwork: { label: "Upwork", href: "" },
+  contra: { label: "Contra", href: "" },
+} satisfies Record<string, NavItem>;
+
+export const elsewhere: NavItem[] = Object.values(profiles).filter((p) => p.href);
+
+/**
+ * A scheduling link (Cal.com, Calendly) for a first call. Shown on the
+ * contact page beside the email address once set.
+ */
+export const bookingUrl = "";
 
 export const legal: NavItem[] = [{ label: "Privacy", href: "/privacy/" }];

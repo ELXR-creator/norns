@@ -29,7 +29,7 @@ export function Footer() {
             <p className={`meta ${styles.columnTitle}`}>{column.title}</p>
             <ul className={styles.links}>
               {column.items.map((item) => (
-                <li key={item.href}>
+                <li key={item.label}>
                   {item.external ? (
                     <a href={item.href} className={styles.item} target="_blank" rel="noopener">
                       {item.label} <span aria-hidden="true">↗</span>
@@ -52,7 +52,7 @@ export function Footer() {
           </p>
           <ul className={styles.legal}>
             {legal.map((item) => (
-              <li key={item.href}>
+              <li key={item.label}>
                 <Link href={item.href} className={`meta ${styles.legalLink}`} prefetch={false}>
                   {item.label}
                 </Link>

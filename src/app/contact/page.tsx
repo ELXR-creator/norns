@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { site } from "@/content/site";
+import { bookingUrl, site } from "@/content/site";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -25,6 +25,15 @@ export default function ContactPage() {
               {site.contactEmail}
             </a>
           </p>
+          {bookingUrl ? (
+            <p className={styles.direct}>
+              <span className="meta">Or book a call</span>
+              <a className="link" href={bookingUrl} target="_blank" rel="noopener">
+                Choose a time <span className="arrow" aria-hidden="true">↗</span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </p>
+          ) : null}
         </header>
 
         <ContactForm email={site.contactEmail} />
