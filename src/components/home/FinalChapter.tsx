@@ -10,7 +10,7 @@ import styles from "./FinalChapter.module.css";
  */
 export function FinalChapter() {
   return (
-    <section className={styles.final} aria-labelledby="final-title">
+    <section className={styles.final} aria-labelledby="final-title" data-final>
       <div className={`container ${styles.inner}`}>
         <div className={styles.mark} data-reveal="fade">
           <NornsMark variant="contour" className={styles.contour} />

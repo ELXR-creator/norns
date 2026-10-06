@@ -1,22 +1,33 @@
+/* The last screen is shared with the footer: together they fill exactly
+   one viewport, so the page ends on a single composed frame — the
+   completed mark, the statement, and the closing lines beneath. */
 .final {
+  --footer-space: 9.5rem;
   display: flex;
   align-items: center;
-  min-height: 100vh;
-  min-height: 100svh;
-  padding-block: var(--section-y);
+  min-height: calc(100vh - var(--footer-space));
+  min-height: calc(100svh - var(--footer-space));
+  padding-block: calc(var(--nav-h) + var(--s-6)) var(--s-7);
   background: linear-gradient(to bottom, var(--c-ground), var(--c-void) 35%);
+}
+
+@media (max-width: 719px) {
+  .final {
+    --footer-space: 0rem;
+    min-height: 88svh;
+  }
 }
 
 .inner {
   display: grid;
   justify-items: center;
-  row-gap: clamp(3rem, 9vh, 6rem);
+  row-gap: clamp(2.5rem, 7vh, 5rem);
 }
 
 /* The two states of the mark share one box: the drawing and the built form. */
 .mark {
   display: grid;
-  width: min(72vw, 38rem);
+  width: min(72vw, 38rem, 74vh);
 }
 
 .contour,

@@ -1,48 +1,46 @@
+/* The footer continues whatever surface ends the page; it is a closing
+   line, not a separate block. */
 .footer {
   background: var(--c-void);
   border-top: var(--hairline) solid var(--c-line);
 }
 
-.inner {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--col-gap);
-  row-gap: var(--s-7);
-  padding-block: var(--s-8) var(--s-6);
+/* Under the homepage's final screen there is no seam: the footer is part
+   of that frame. */
+:global(main:has([data-final])) + .footer {
+  border-top-color: transparent;
 }
 
-.identity {
-  grid-column: 1 / -1;
+.inner {
   display: grid;
-  row-gap: var(--s-3);
-  align-content: start;
+  row-gap: var(--s-5);
+  padding-block: var(--s-6) var(--s-5);
+}
+
+.primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-4) var(--s-7);
 }
 
 .wordmark {
-  justify-self: start;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   font-weight: var(--fw-medium);
   letter-spacing: -0.02em;
-}
-
-.line {
-  color: var(--c-text-2);
-  font-size: var(--fs-small);
-}
-
-.columnTitle {
-  margin-bottom: var(--s-4);
-  color: var(--c-text-3);
+  margin-right: auto;
 }
 
 .links {
-  display: grid;
-  row-gap: var(--s-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-5);
 }
 
 .item {
-  display: inline-block;
-  padding-block: 0.3rem;
+  display: inline-flex;
+  gap: 0.25em;
+  padding-block: 0.35rem;
   font-size: var(--fs-small);
   color: var(--c-text-1);
   transition: color var(--dur-2) var(--ease-standard);
@@ -53,48 +51,58 @@
   color: var(--c-paper);
 }
 
+.out {
+  color: var(--c-text-3);
+  transition: transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-standard);
+}
+
+.item:hover .out,
+.item:focus-visible .out {
+  color: var(--c-paper);
+  transform: translate(0.08em, -0.08em);
+}
+
 .base {
-  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--s-4);
-  padding-top: var(--s-5);
+  align-items: baseline;
+  gap: var(--s-3) var(--s-6);
+  padding-top: var(--s-4);
   border-top: var(--hairline) solid var(--c-line);
 }
 
 .legal {
   display: flex;
   gap: var(--s-5);
+  margin-left: auto;
 }
 
-.legalLink {
+.baseLink {
   display: inline-block;
   padding-block: 0.4rem;
   margin-block: -0.4rem;
   transition: color var(--dur-2) var(--ease-standard);
 }
 
-.legalLink:hover,
-.legalLink:focus-visible {
+.baseLink:hover,
+.baseLink:focus-visible {
   color: var(--c-paper);
 }
 
-@media (min-width: 900px) {
-  .inner {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    padding-block: var(--s-9) var(--s-6);
+/* Narrow screens: one group per line, wordmark on its own. */
+@media (max-width: 719px) {
+  .primary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-4);
   }
 
-  .identity {
-    grid-column: 1 / span 6;
+  .base {
+    flex-direction: column;
+    gap: var(--s-2);
   }
 
-  .column {
-    grid-column: span 2;
-  }
-
-  .column:first-of-type {
-    grid-column: 9 / span 2;
+  .legal {
+    margin-left: 0;
   }
 }
