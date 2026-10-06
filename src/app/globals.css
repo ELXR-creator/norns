@@ -71,6 +71,9 @@
   /* --- Layout ------------------------------------------------------------- */
   --page-max: 1680px;
   --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+  /* Gutters never fall inside a notch or rounded corner in landscape. */
+  --gutter-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  --gutter-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   --col-gap: clamp(1rem, 0.5rem + 1.4vw, 2rem);
   --measure: 34rem; /* comfortable reading column */
   --nav-h: 4.5rem;
@@ -98,6 +101,15 @@
   --z-skip: 100;
 
   color-scheme: dark;
+}
+
+/* Phones: the desktop pauses were sized for wide compositions. Stacked,
+   they read as empty space, so the rhythm tightens — pauses remain. */
+@media (max-width: 719px) {
+  :root {
+    --section-y: clamp(5rem, 2.5rem + 9vh, 8rem);
+    --section-y-quiet: clamp(6.5rem, 3rem + 14vh, 11rem);
+  }
 }
 
 /* ==========================================================================
@@ -205,7 +217,7 @@ svg {
   width: 100%;
   max-width: var(--page-max);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: var(--gutter-left) var(--gutter-right);
 }
 
 /* Institutional metadata: indices, statuses, labels. */

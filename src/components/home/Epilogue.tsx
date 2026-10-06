@@ -26,6 +26,13 @@ export function Epilogue() {
             <path className={styles.thread} d="M50 0 V100" />
             <path className={styles.thread} d="M90 0 V58 C90 80 50 74 50 96 V100" />
           </svg>
+          {/* Phones: the threads run down the left edge as a braid, meet,
+              then sweep to the centre of the statement. */}
+          <svg className={styles.artPhone} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path className={styles.thread} d="M1.5 0 V62 C1.5 72 4 72 4 80 C4 92 50 88 50 100" />
+            <path className={styles.thread} d="M4 0 V80 C4 92 50 88 50 100" />
+            <path className={styles.thread} d="M6.5 0 V62 C6.5 72 4 72 4 80 C4 92 50 88 50 100" />
+          </svg>
 
           <ol className={styles.labels} aria-hidden="true">
             <li className="meta">Past</li>

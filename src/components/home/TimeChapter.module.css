@@ -51,3 +51,60 @@
     justify-self: end;
   }
 }
+
+/* --- Phones ------------------------------------------------------------
+   Width can no longer carry the passage of time, so height does: the
+   three moments hang from one hairline running down the left edge, each
+   marked where it meets the line. Past → present → future becomes a
+   single vertical journey, read in order. */
+
+@media (max-width: 719px) {
+  .time {
+    padding-block: clamp(4.5rem, 12svh, 7rem) clamp(3rem, 8svh, 5rem);
+  }
+
+  .list {
+    --gap: clamp(4.5rem, 13svh, 7rem);
+    row-gap: var(--gap);
+  }
+
+  .moment {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  /* The rail: from this moment's mark down to the next one's. */
+  .moment:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.53rem;
+    bottom: calc(-1 * var(--gap) - 0.53rem);
+    width: var(--hairline);
+    background: var(--c-line-strong);
+  }
+
+  /* The mark where a moment meets the rail. */
+  .moment::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.53rem;
+    width: 0.75rem;
+    height: var(--hairline);
+    background: var(--c-text-1);
+    transition: background-color var(--dur-4) var(--ease-standard);
+  }
+
+  [data-focus-ready] .moment:not([data-present])::after {
+    background: var(--c-text-4);
+  }
+
+  .when {
+    font-size: 0.75rem;
+  }
+
+  .line {
+    font-size: clamp(2.125rem, 10.5vw, 2.75rem);
+  }
+}

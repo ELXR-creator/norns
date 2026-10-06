@@ -117,3 +117,31 @@
     opacity: 0;
   }
 }
+
+/* --- Phones and tablets -------------------------------------------------
+   Below laptop width the statement is composed as three lines — "The future / isn't
+   predicted. / It's constructed." — sized so the longest line fills the
+   width without breaking again, from 320px upward. */
+
+@media (max-width: 1023px) {
+  /* Bounded by height too, so a phone held sideways keeps the whole
+     statement on its first screen. */
+  .title {
+    font-size: clamp(2.25rem, min(12vw, 15svh), 6rem);
+    line-height: 0.98;
+  }
+
+  .phoneBreak {
+    display: block;
+  }
+}
+
+@media (max-width: 719px) {
+  .hero {
+    padding-bottom: calc(clamp(3rem, 9svh, 5rem) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .lead {
+    margin-top: clamp(1.5rem, 4svh, 2.5rem);
+  }
+}

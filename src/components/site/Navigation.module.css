@@ -30,7 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--nav-h);
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .identity {
@@ -42,6 +43,9 @@
 }
 
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: 1.125rem;
   font-weight: var(--fw-medium);
   letter-spacing: -0.02em;
@@ -140,7 +144,7 @@
   flex-direction: column;
   height: 100%;
   padding-top: calc(var(--nav-h) + clamp(2rem, 8vh, 6rem));
-  padding-bottom: var(--s-6);
+  padding-bottom: calc(var(--s-6) + env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
 }
 
@@ -183,7 +187,7 @@
 }
 
 .label {
-  font-size: clamp(2.75rem, 1.4rem + 5.6vw, 7rem);
+  font-size: clamp(2.25rem, min(1.4rem + 5.6vw, 12svh), 7rem);
   font-weight: var(--fw-medium);
   letter-spacing: var(--tr-display);
   line-height: 1;

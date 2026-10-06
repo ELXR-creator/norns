@@ -50,3 +50,10 @@
     padding-bottom: 0.6em;
   }
 }
+
+/* Phones: a comfortable tap area without changing how the link looks. */
+@media (max-width: 719px) {
+  .cta {
+    padding-block: 0.6rem;
+  }
+}

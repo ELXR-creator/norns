@@ -18,7 +18,10 @@ export function Hero() {
       <div className={`container ${styles.inner}`}>
         <h1 id="hero-title" className={styles.title}>
           <span className={styles.line}>
-            <span className={styles.dim}>{site.statement[0]}</span>
+            {/* On phones this line is set as two: "The future / isn't predicted." */}
+            <span className={styles.dim}>
+              <span className={styles.phoneBreak}>The future</span> isn&apos;t predicted.
+            </span>
           </span>{" "}
           <span className={styles.line}>
             <span className={styles.bright}>{site.statement[1]}</span>

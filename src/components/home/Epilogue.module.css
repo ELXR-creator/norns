@@ -22,7 +22,8 @@
   padding-bottom: clamp(15rem, 46vh, 28rem);
 }
 
-.art {
+.art,
+.artPhone {
   position: absolute;
   top: var(--label-h);
   left: 0;
@@ -33,6 +34,10 @@
   /* Drawn downwards as the reader scrolls: the threads run on ahead of
      the text, and have met by the time the statement arrives. */
   clip-path: inset(0 0 calc((1 - var(--draw, 1)) * 100%) 0);
+}
+
+.artPhone {
+  display: none;
 }
 
 .thread {
@@ -184,29 +189,72 @@
   color: var(--c-paper);
 }
 
-/* --- Narrow screens -----------------------------------------------------
-   Same composition, tightened: the threads move nearer the edges so the
-   two lines keep their places between them; the pauses shorten. */
+/* --- Phones -------------------------------------------------------------
+   Width can no longer hold three threads apart, so the passage runs down
+   the page instead: past, present and future are marked along a braid of
+   three hairlines at the left edge, each line of text sitting between the
+   two moments it joins. The braid closes into one line, which sweeps to
+   the centre of the statement. Visual order only — the labels are hidden
+   from assistive technology, so the reading order is unchanged. */
 
 @media (max-width: 719px) {
-  .threads {
-    --x-past: 7%;
-    --x-future: 93%;
-    padding-bottom: clamp(10rem, 34vh, 16rem);
+  .epilogue {
+    padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
   }
 
-  .line {
-    width: calc(50% - var(--x-past) - 4%);
+  .threads {
+    padding-left: 2.25rem;
+    padding-bottom: clamp(8rem, 26svh, 12rem);
+  }
+
+  .art {
+    display: none;
+  }
+
+  .artPhone {
+    display: block;
+    top: 0;
+    height: 100%;
+  }
+
+  .labels {
+    display: contents;
+  }
+
+  .labels li {
+    position: static;
+    transform: none;
+  }
+
+  .labels li:nth-child(1) {
+    grid-row: 1;
   }
 
   .lineWas {
-    margin-top: clamp(3.5rem, 10vh, 5rem);
-    margin-left: calc(var(--x-past) + 2.5%);
+    grid-row: 2;
+  }
+
+  .labels li:nth-child(2) {
+    grid-row: 3;
   }
 
   .lineIs {
-    margin-top: clamp(3rem, 8vh, 4rem);
-    margin-left: 52%;
+    grid-row: 4;
+  }
+
+  .labels li:nth-child(3) {
+    grid-row: 5;
+  }
+
+  .line {
+    width: auto;
+    margin: var(--s-3) 0 clamp(3rem, 9svh, 4.5rem);
+    font-size: clamp(1.375rem, 6.2vw, 1.75rem);
+  }
+
+  .lineWas,
+  .lineIs {
+    margin-left: 0;
   }
 
   .titleCard {
@@ -216,5 +264,23 @@
   .colophon {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--s-2);
+  }
+
+  /* Comfortable to tap, still set as quiet metadata. */
+  .colophonLinks {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 0 var(--s-5);
+  }
+
+  .colophonLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 2.75rem;
+    padding-block: 0;
+    margin-block: 0;
   }
 }

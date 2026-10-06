@@ -41,7 +41,8 @@
 
 @media (prefers-reduced-motion: no-preference) {
   :global(.js) .sequence {
-    height: calc(var(--steps) * 65vh + 100vh);
+    --step: 65vh;
+    height: calc(var(--steps) * var(--step) + 100vh);
     padding: 0;
   }
 
@@ -124,5 +125,17 @@
 
   :global(.js) .tick[data-on] {
     background: var(--c-paper);
+  }
+}
+
+/* Phones: a thumb covers ground faster, so each word holds for less
+   scroll — the whole sequence passes in under four screens. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 719px) {
+  :global(.js) .sequence {
+    --step: 40svh;
+  }
+
+  :global(.js) .stage {
+    height: 100svh;
   }
 }
