@@ -19,7 +19,7 @@ export const site = {
    * Formspree endpoint (https://formspree.io/f/…) that delivers the contact
    * form to contactEmail. Empty: the form opens the visitor's mail client.
    */
-  formEndpoint: "",
+  formEndpoint: "https://formspree.io/f/xqpeeepw",
 } as const;
 
 export type NavItem = { label: string; href: string; note?: string };

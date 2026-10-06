@@ -36,6 +36,10 @@ export default function PrivacyPage() {
             organization and a description of the problem. We use it to read, consider and reply to your message. We
             do not sell it or use it for marketing.
           </p>
+          <p>
+            Messages sent through the contact form are delivered by Formspree, a form-processing service, which
+            stores them on our behalf so they reach our inbox.
+          </p>
 
           <h2>Questions</h2>
           <p>
