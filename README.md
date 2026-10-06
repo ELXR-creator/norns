@@ -10,7 +10,11 @@ npm run dev        # http://localhost:3000
 npm run build      # static output in ./out
 npm run lint
 npm run typecheck
+npm run preview:build   # after build: one self-contained preview page in ./preview
 ```
+
+`preview/index.html` is a still, script-free copy of the homepage (fonts embedded) for sharing
+without running the site. Regenerate it after content changes.
 
 ## Structure
 
