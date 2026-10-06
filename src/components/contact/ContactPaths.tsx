@@ -28,12 +28,12 @@ function routes(): Route[] {
     },
     {
       key: "know",
-      label: "Know us",
+      label: "Socials",
       links: [profiles.linkedin, profiles.github].filter((p) => p.href).map(out),
     },
     {
       key: "work",
-      label: "Work with us",
+      label: "Let’s work together",
       links: [profiles.upwork, profiles.contra].filter((p) => p.href).map(out),
     },
   ];

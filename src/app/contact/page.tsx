@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactPaths } from "@/components/contact/ContactPaths";
-import { legal, site } from "@/content/site";
+import { site } from "@/content/site";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -13,8 +12,9 @@ export const metadata: Metadata = {
 
 /**
  * Tell us, or find us. Two routes into the same place: the form on the
- * left, and the other paths on the right, joined by one thread. The site
- * footer stands down here — its destinations are part of the page.
+ * left, and the other paths on the right, joined by one thread — composed
+ * to fit one screen on desktop. The site footer stands down here: its
+ * destinations are part of the page.
  */
 export default function ContactPage() {
   return (
@@ -26,28 +26,13 @@ export default function ContactPage() {
             <h1 id="contact-title" className={styles.title}>
               <span>Tell us what</span> <span>you&rsquo;re trying</span> <span>to solve.</span>
             </h1>
-            <p className={styles.note}>Describe the problem, not the solution you have in mind.</p>
+            <p className={styles.note}>Describe the problem, and let&rsquo;s solve it together.</p>
           </header>
 
           <ContactForm email={site.contactEmail} endpoint={site.formEndpoint || undefined} />
         </div>
 
         <ContactPaths />
-
-        <footer className={styles.credits}>
-          <p className="meta">
-            © {site.year} {site.legalName}
-          </p>
-          <ul className={styles.legal}>
-            {legal.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} className={`meta ${styles.small}`} prefetch={false}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </footer>
       </div>
     </section>
   );

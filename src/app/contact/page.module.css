@@ -36,31 +36,6 @@
   color: var(--c-text-2);
 }
 
-/* Quiet credits, not a footer. */
-.credits {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--s-5);
-  margin-top: clamp(3.5rem, 9vh, 5.5rem);
-}
-
-.legal {
-  display: flex;
-  gap: var(--s-5);
-}
-
-.small {
-  display: inline-block;
-  padding-block: 0.75rem;
-  margin-block: -0.75rem;
-  transition: color var(--dur-2) var(--ease-standard);
-}
-
-.small:hover {
-  color: var(--c-paper);
-}
-
 @media (min-width: 1024px) {
   .layout {
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -69,6 +44,29 @@
 
   .tell {
     grid-column: 1 / span 8;
+  }
+
+  /* One screen: the page fills the window and stops there. The problem
+     field takes whatever height is left. */
+  .contact {
+    display: flex;
+    flex-direction: column;
+    height: max(100svh, 40rem);
+    padding-bottom: clamp(2.75rem, 7vh, 4.5rem);
+  }
+
+  .layout {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .tell {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .title {
+    font-size: min(var(--fs-h2), 9.6vh);
   }
 
   /* The note takes the room beside the headline rather than a line of its
@@ -85,26 +83,11 @@
   .note {
     align-self: end;
     justify-self: end;
-    max-width: 19ch;
+    max-width: 21ch;
     padding-bottom: 0.35em;
   }
 
   .layout > nav {
-    grid-column: 9 / span 4;
-  }
-
-  /* The credits keep the page's two columns: Privacy sits on the thread. */
-  .credits {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: subgrid;
-  }
-
-  .credits > :first-child {
-    grid-column: 1 / span 8;
-  }
-
-  .legal {
     grid-column: 9 / span 4;
   }
 }
@@ -114,9 +97,5 @@
   .title {
     font-size: min(13.4vw, 3.6rem);
     line-height: 0.98;
-  }
-
-  .credits {
-    margin-top: var(--s-7);
   }
 }

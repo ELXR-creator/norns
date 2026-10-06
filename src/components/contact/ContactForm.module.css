@@ -89,11 +89,32 @@
   font-size: var(--fs-lead);
   letter-spacing: var(--tr-lead);
   line-height: var(--lh-lead);
-  /* Ruled like a sheet: faint lines at the text's own leading. */
-  background-image: linear-gradient(to bottom, transparent calc(100% - var(--hairline)), var(--c-line) 0);
-  background-size: 100% calc(var(--fs-lead) * 1.42);
-  background-position: 0 calc(var(--s-3) + 0.2em);
-  background-attachment: local;
+}
+
+/* Desktop: the form fills its column, and the problem takes the rest. */
+@media (min-width: 1024px) {
+  .form {
+    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .problem {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .problemLabel {
+    font-size: min(clamp(1.375rem, 0.95rem + 1.2vw, 2.125rem), 4.4vh);
+  }
+
+  .area {
+    height: 100%;
+    min-height: 4.5rem;
+    resize: none;
+  }
+
+  .confirmation {
+    height: 100%;
+  }
 }
 
 /* --- Attention ----------------------------------------------------------- */
