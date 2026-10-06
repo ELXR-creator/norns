@@ -1,108 +1,14 @@
-/* The footer continues whatever surface ends the page; it is a closing
-   line, not a separate block. */
 .footer {
   background: var(--c-void);
   border-top: var(--hairline) solid var(--c-line);
 }
 
-/* On the homepage the final screen carries the footer inside the mark,
-   so this one stands down. */
+.inner {
+  padding-block: var(--s-5) calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
+}
+
+/* On the homepage the final scene carries the credits, so this one stands
+   down. */
 :global(main:has([data-final])) + .footer {
   display: none;
-}
-
-.inner {
-  display: grid;
-  row-gap: var(--s-5);
-  padding-block: var(--s-6) var(--s-5);
-}
-
-.primary {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--s-4) var(--s-7);
-}
-
-.wordmark {
-  font-size: 1.0625rem;
-  font-weight: var(--fw-medium);
-  letter-spacing: -0.02em;
-  margin-right: auto;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-1) var(--s-5);
-}
-
-.item {
-  display: inline-flex;
-  gap: 0.25em;
-  padding-block: 0.35rem;
-  font-size: var(--fs-small);
-  color: var(--c-text-1);
-  transition: color var(--dur-2) var(--ease-standard);
-}
-
-.item:hover,
-.item:focus-visible {
-  color: var(--c-paper);
-}
-
-.out {
-  color: var(--c-text-3);
-  transition: transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-standard);
-}
-
-.item:hover .out,
-.item:focus-visible .out {
-  color: var(--c-paper);
-  transform: translate(0.08em, -0.08em);
-}
-
-.base {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--s-3) var(--s-6);
-  padding-top: var(--s-4);
-  border-top: var(--hairline) solid var(--c-line);
-}
-
-.legal {
-  display: flex;
-  gap: var(--s-5);
-  margin-left: auto;
-}
-
-.baseLink {
-  display: inline-block;
-  padding-block: 0.4rem;
-  margin-block: -0.4rem;
-  transition: color var(--dur-2) var(--ease-standard);
-}
-
-.baseLink:hover,
-.baseLink:focus-visible {
-  color: var(--c-paper);
-}
-
-/* Narrow screens: one group per line, wordmark on its own. */
-@media (max-width: 719px) {
-  .primary {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-4);
-  }
-
-  .base {
-    flex-direction: column;
-    gap: var(--s-2);
-  }
-
-  .legal {
-    margin-left: 0;
-  }
 }

@@ -18,8 +18,7 @@
   padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
 }
 
-.echo,
-.threads {
+.echo {
   display: none;
 }
 
@@ -68,32 +67,10 @@
 /* --- Credits ------------------------------------------------------------ */
 
 .credits {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--s-2) var(--s-6);
   width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
   padding-inline: var(--gutter-left) var(--gutter-right);
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--s-6);
-}
-
-.link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  min-height: 2.75rem;
-  transition: color var(--dur-2) var(--ease-standard);
-}
-
-.link:hover,
-.link:focus-visible {
-  color: var(--c-paper);
 }
 
 /* ==========================================================================
@@ -139,33 +116,6 @@
     left: 0;
   }
 
-  /* Past, present, future: three hairlines from the name into the mark.
-     They draw downward, then fade once the mark has formed. */
-  :global(.js) .threads {
-    display: block;
-    position: absolute;
-    /* A narrow column under the name, so the threads fall rather than
-       stretch across the frame. */
-    left: 50%;
-    width: min(100%, 40rem);
-    translate: -50% 0;
-    /* From inside the dissolving letters to the mark's centre as it
-       passes: the threads emerge from the name and run into the symbol. */
-    top: 30%;
-    height: 25%;
-    overflow: visible;
-    opacity: var(--threads, 0);
-    clip-path: inset(0 0 calc((1 - var(--draw, 0)) * 100%) 0);
-    pointer-events: none;
-  }
-
-  :global(.js) .threads path {
-    fill: none;
-    stroke: rgb(236 235 231 / 0.3);
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-  }
-
   /* The mark rises out of near-invisibility to just above the centre of
      the frame — the optical centre, not the geometric one. */
   :global(.js) .mark {
@@ -182,6 +132,7 @@
   :global(.js) .credits {
     position: absolute;
     left: 0;
+    right: 0;
     bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
     opacity: var(--credits, 0);
     transform: translateY(calc((1 - var(--credits, 0)) * 0.5rem));
@@ -200,21 +151,11 @@
 
 /* --- Phones -------------------------------------------------------------
    The name still spans the width; the mark becomes far larger relative to
-   the screen, and the threads have further to fall. */
+   the screen. */
 
 @media (max-width: 719px) {
   .mark {
     width: 66vw;
-  }
-
-  .credits {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
-
-  .links {
-    gap: 0 var(--s-5);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -226,17 +167,13 @@
       top: calc(var(--nav-h) + 9svh);
     }
 
-    :global(.js) .threads {
-      top: 22%;
-      height: 36%;
-    }
-
+    /* Higher than on desktop: the credits need the lower third. */
     :global(.js) .mark {
-      top: 52%;
+      top: 41%;
     }
 
     :global(.js) .echo {
-      top: 52%;
+      top: 41%;
       width: 280cqw;
     }
   }

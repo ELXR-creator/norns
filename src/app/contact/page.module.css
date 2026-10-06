@@ -1,11 +1,10 @@
 .contact {
-  padding-block: calc(var(--nav-h) + clamp(4rem, 14vh, 9rem)) var(--section-y);
-  min-height: 100vh;
+  padding-block: calc(var(--nav-h) + clamp(2rem, 9vh, 5.5rem)) var(--section-y);
 }
 
 .layout {
   display: grid;
-  row-gap: clamp(3.5rem, 9vh, 6rem);
+  row-gap: clamp(2.5rem, 7vh, 4rem);
 }
 
 .head {
@@ -32,7 +31,7 @@
   display: grid;
   justify-items: start;
   row-gap: var(--s-2);
-  margin-top: var(--s-5);
+  margin-top: var(--s-3);
 }
 
 @media (min-width: 1024px) {
@@ -50,6 +49,18 @@
 
   .layout > :last-child {
     grid-column: 7 / span 6;
-    padding-top: 2.1rem;
+    padding-top: 2rem;
+  }
+}
+
+/* Tablets and phones: head above form, kept tight so the form follows
+   quickly. */
+@media (max-width: 1023px) {
+  .layout {
+    row-gap: 2rem;
+  }
+
+  .direct {
+    margin-top: 0;
   }
 }

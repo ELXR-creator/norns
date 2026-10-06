@@ -1,11 +1,30 @@
+/* A ruled sheet: compact enough that the whole form, and its send link,
+   sit in one screen on a laptop. */
 .form {
   display: grid;
-  row-gap: var(--s-7);
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: var(--s-6);
 }
 
 .field {
   display: grid;
-  row-gap: var(--s-3);
+  row-gap: var(--s-2);
+}
+
+.half {
+  min-width: 0;
+}
+
+.full,
+.actions {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 720px) {
+  .form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .optional {
@@ -16,7 +35,7 @@
 
 .input {
   width: 100%;
-  padding: 0.35rem 0 0.8rem;
+  padding: 0.25rem 0 0.6rem;
   font: inherit;
   font-size: var(--fs-lead);
   letter-spacing: var(--tr-lead);
@@ -40,14 +59,16 @@
 
 .area {
   resize: vertical;
-  min-height: 9rem;
+  min-height: 6.5rem;
   line-height: var(--lh-lead);
 }
 
 .actions {
-  display: grid;
-  justify-items: start;
-  row-gap: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-3) var(--s-6);
+  padding-top: var(--s-2);
 }
 
 .submit {

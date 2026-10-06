@@ -1,0 +1,123 @@
+.credits {
+  display: grid;
+  row-gap: var(--s-4);
+  width: 100%;
+}
+
+/* --- Line one: where to go ------------------------------------------- */
+
+.primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-8);
+}
+
+.home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--c-paper);
+}
+
+.mark {
+  height: 1.1rem;
+  width: auto;
+}
+
+.elsewhere {
+  margin-left: auto;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-6);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 2.75rem;
+  font-size: var(--fs-small);
+  letter-spacing: -0.005em;
+  color: var(--c-text-1);
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.item:hover,
+.item:focus-visible {
+  color: var(--c-paper);
+}
+
+.out {
+  color: var(--c-text-3);
+  transition: transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-standard);
+}
+
+.item:hover .out,
+.item:focus-visible .out {
+  color: var(--c-paper);
+  transform: translate(0.08em, -0.08em);
+}
+
+/* --- Line two: the small print ----------------------------------------- */
+
+.secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-6);
+  padding-top: var(--s-4);
+  border-top: var(--hairline) solid var(--c-line);
+}
+
+.legal {
+  display: flex;
+  gap: var(--s-5);
+  margin-left: auto;
+}
+
+.small {
+  display: inline-block;
+  padding-block: 0.5rem;
+  margin-block: -0.5rem;
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.small:hover,
+.small:focus-visible {
+  color: var(--c-paper);
+}
+
+/* Phones: each group on its own line, left-aligned; the small print
+   stacks beneath. */
+@media (max-width: 719px) {
+  .primary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .elsewhere {
+    margin-left: 0;
+  }
+
+  .list {
+    gap: 0 var(--s-5);
+  }
+
+  .secondary {
+    gap: var(--s-3) var(--s-5);
+  }
+
+  .legal {
+    margin-left: 0;
+  }
+
+  .small {
+    padding-block: 0.75rem;
+    margin-block: -0.75rem;
+  }
+}

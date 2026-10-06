@@ -78,32 +78,32 @@ export function ContactForm({ email, endpoint }: { email: string; endpoint?: str
       onSubmit={onSubmit}
       aria-busy={status === "sending"}
     >
-      <div className={styles.field}>
+      <div className={`${styles.field} ${styles.half}`}>
         <label className="meta" htmlFor={`${id}-name`}>
           Name
         </label>
         <input className={styles.input} id={`${id}-name`} name="name" type="text" autoComplete="name" required />
       </div>
 
-      <div className={styles.field}>
+      <div className={`${styles.field} ${styles.half}`}>
         <label className="meta" htmlFor={`${id}-email`}>
           Email
         </label>
         <input className={styles.input} id={`${id}-email`} name="email" type="email" autoComplete="email" required />
       </div>
 
-      <div className={styles.field}>
+      <div className={`${styles.field} ${styles.full}`}>
         <label className="meta" htmlFor={`${id}-org`}>
           Organization <span className={styles.optional}>— optional</span>
         </label>
         <input className={styles.input} id={`${id}-org`} name="organization" type="text" autoComplete="organization" />
       </div>
 
-      <div className={styles.field}>
+      <div className={`${styles.field} ${styles.full}`}>
         <label className="meta" htmlFor={`${id}-problem`}>
           What are you trying to solve?
         </label>
-        <textarea className={`${styles.input} ${styles.area}`} id={`${id}-problem`} name="problem" rows={6} required />
+        <textarea className={`${styles.input} ${styles.area}`} id={`${id}-problem`} name="problem" rows={4} required />
       </div>
 
       {/* Spam trap: invisible to people, filled in by bots. */}
