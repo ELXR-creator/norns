@@ -3,10 +3,19 @@
 import { useId, useState } from "react";
 import styles from "./ContactForm.module.css";
 
-type Fields = { name: string; email: string; organization: string; problem: string };
+type Fields = { name: string; email: string; organization: string; stage: string; problem: string };
+
+/** Where the visitor is — helps decide whether to start with discovery or delivery. */
+const stages = [
+  "Exploring an idea",
+  "Need architecture or a second opinion",
+  "Ready to build",
+  "Fixing something that exists",
+  "Not sure yet",
+];
 
 /**
- * Four questions, and the one that matters is the last.
+ * Five questions, and the one that matters is the last.
  *
  * There is no server behind this site, so the form composes an email to
  * Norns in the visitor's own mail client — and says so. Without scripting
@@ -22,7 +31,8 @@ export function ContactForm({ email }: { email: string }) {
     const from = data.organization ? `${data.name}, ${data.organization}` : data.name;
     const subject = `A problem worth solving — ${from}`;
     const signature = [data.name, data.organization, data.email].filter(Boolean);
-    const body = [data.problem, "", "—", ...signature].join("\n");
+    const context = data.stage ? [`Where we are: ${data.stage}`, ""] : [];
+    const body = [...context, data.problem, "", "—", ...signature].join("\n");
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setComposed(true);
   };
@@ -48,6 +58,20 @@ export function ContactForm({ email }: { email: string }) {
           Organization <span className={styles.optional}>— optional</span>
         </label>
         <input className={styles.input} id={`${id}-org`} name="organization" type="text" autoComplete="organization" />
+      </div>
+
+      <div className={styles.field}>
+        <label className="meta" htmlFor={`${id}-stage`}>
+          Where are you? <span className={styles.optional}>— optional</span>
+        </label>
+        <select className={`${styles.input} ${styles.select}`} id={`${id}-stage`} name="stage" defaultValue="">
+          <option value="">Choose one</option>
+          {stages.map((stage) => (
+            <option key={stage} value={stage}>
+              {stage}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className={styles.field}>

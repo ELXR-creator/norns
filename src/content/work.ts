@@ -1,28 +1,16 @@
 /**
- * Work built at Norns.
+ * Work at Norns — two kinds of evidence.
  *
- * Every product is equal in status and is allowed its own visual universe.
- * A slot is either `private` (reserved — shown without name, visual or link)
- * or `public` (fully described). Converting a slot is a change to one object.
+ * PRODUCTS are built and operated by Norns. They prove Norns can own a
+ * product, not only advise on one. Each may bring its own visual universe.
  *
- * Example of a public entry, once a product is ready to be shown:
- *
- *   {
- *     id: "skema",
- *     index: "01",
- *     year: 2026,
- *     visibility: "public",
- *     name: "Skema",
- *     summary: "One sentence on the problem it solves.",
- *     href: "https://skema.global",
- *     cta: "Enter Skema",
- *     universe: {
- *       ground: "#…", ink: "#…", accent: "#…",
- *       fontFamily: "…",          // optional
- *     },
- *     visual: { src: "/work/skema/cover.webp", alt: "…" },
- *   }
+ * CASE STUDIES are client engagements, written as business problem →
+ * reasoning → architecture → execution → measurable result. Anonymise the
+ * client where needed; never publish one without the client's agreement.
+ * Nothing is listed until it is true.
  */
+
+/* --- Products ------------------------------------------------------------ */
 
 export type ProductUniverse = {
   /** Background of the product's world. */
@@ -35,38 +23,66 @@ export type ProductUniverse = {
   fontFamily?: string;
 };
 
-type WorkBase = {
+export type Product = {
   id: string;
   index: string;
-  year: number;
-};
-
-export type PrivateWork = WorkBase & {
-  visibility: "private";
-};
-
-export type PublicWork = WorkBase & {
-  visibility: "public";
   name: string;
   summary: string;
+  /** Honest, current state — e.g. "In development", "Private beta", "Live". */
+  status: string;
+  year: number;
+  /** Only once there is somewhere meaningful to go. */
   href?: string;
   cta?: string;
-  universe: ProductUniverse;
+  /** Only once the product has its own identity. */
+  universe?: ProductUniverse;
   visual?: { src: string; alt: string };
 };
 
-export type WorkEntry = PrivateWork | PublicWork;
-
-export const work: WorkEntry[] = [
-  { id: "work-01", index: "01", year: 2026, visibility: "private" },
-  { id: "work-02", index: "02", year: 2026, visibility: "private" },
+export const products: Product[] = [
+  {
+    id: "skema",
+    index: "01",
+    name: "Skema",
+    summary:
+      "Semantic infrastructure for governed schemas, knowledge graphs and provenance — knowledge that AI systems can rely on.",
+    status: "In development",
+    year: 2026,
+  },
+  {
+    id: "forgeos",
+    index: "02",
+    name: "ForgeOS",
+    summary: "An accountability system for challenges, proof, teams and progression.",
+    status: "In development",
+    year: 2026,
+  },
 ];
 
+/** Products shown in the footer: public, and with somewhere to go. */
+export const linkedProducts = products.filter((p): p is Product & { href: string } => Boolean(p.href));
+
+/* --- Case studies -------------------------------------------------------- */
+
+export type CaseStudy = {
+  id: string;
+  /** e.g. "Financial services", "Manufacturing". */
+  industry: string;
+  /** Client name, or a description when anonymised ("A European insurer"). */
+  client: string;
+  /** The business problem, stated as the client would recognise it. */
+  problem: string;
+  /** What Norns designed and delivered, in one sentence. */
+  approach: string;
+  /** Measured results only — e.g. "Manual reconciliation cut from 3 days to 2 hours". */
+  outcomes: string[];
+  capabilities: string[];
+  year: number;
+};
+
 /**
- * Product links for the footer. A product appears there only once it is
- * public and has somewhere meaningful to go.
+ * Add engagements here as they complete. Full write-ups keep the same
+ * internal shape: problem, context, constraints, discovery, options,
+ * decision, architecture, execution, outcome, lessons, reusable IP.
  */
-export const publicProducts = work.filter(
-  (entry): entry is PublicWork & { href: string } =>
-    entry.visibility === "public" && Boolean(entry.href),
-);
+export const caseStudies: CaseStudy[] = [];

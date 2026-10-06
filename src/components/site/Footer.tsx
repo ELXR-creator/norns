@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { elsewhere, index, legal, site } from "@/content/site";
-import { publicProducts } from "@/content/work";
+import { linkedProducts } from "@/content/work";
 import styles from "./Footer.module.css";
 
 /**
@@ -10,7 +10,7 @@ import styles from "./Footer.module.css";
 export function Footer() {
   const columns = [
     { title: "Index", items: index.map(({ label, href }) => ({ label, href, external: false })) },
-    { title: "Products", items: publicProducts.map((p) => ({ label: p.name, href: p.href, external: true })) },
+    { title: "Products", items: linkedProducts.map((p) => ({ label: p.name, href: p.href, external: true })) },
     { title: "Elsewhere", items: elsewhere.map(({ label, href }) => ({ label, href, external: true })) },
   ].filter((column) => column.items.length > 0);
 
@@ -21,7 +21,7 @@ export function Footer() {
           <Link href="/" className={styles.wordmark}>
             {site.name}
           </Link>
-          <p className={styles.line}>An independent technology company.</p>
+          <p className={styles.line}>A product, data and intelligence consultancy.</p>
         </div>
 
         {columns.map((column) => (

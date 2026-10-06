@@ -56,7 +56,7 @@ export function FormSequence({ forms, resolution }: FormSequenceProps) {
       <div className={styles.stage}>
         <div className={`container ${styles.frame}`}>
           <div className={styles.head} aria-hidden="true">
-            <span className="meta">Method</span>
+            <span className="meta">The answer</span>
             <span className={`meta ${styles.counter}`}>
               <span className={styles.current}>{String(active + 1).padStart(2, "0")}</span> / {count}
             </span>

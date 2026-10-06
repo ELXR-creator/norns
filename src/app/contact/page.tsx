@@ -4,8 +4,8 @@ import { site } from "@/content/site";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Bring Norns a problem worth solving.",
+  title: "Start a project",
+  description: "Bring Norns a problem worth solving — product, data, knowledge or AI.",
   alternates: { canonical: "/contact/" },
 };
 
@@ -16,9 +16,11 @@ export default function ContactPage() {
         <header className={styles.head}>
           <p className="meta">Contact</p>
           <h1 id="contact-title" className={styles.title}>
-            Tell us what you&rsquo;re trying to solve.
+            Start a project.
           </h1>
-          <p className={styles.note}>Describe the problem, not the solution you have in mind.</p>
+          <p className={styles.note}>
+            Tell us what you&rsquo;re trying to solve. Describe the problem, not the solution you have in mind.
+          </p>
           <p className={styles.direct}>
             <span className="meta">Or write directly</span>
             <a className="link" href={`mailto:${site.contactEmail}`}>

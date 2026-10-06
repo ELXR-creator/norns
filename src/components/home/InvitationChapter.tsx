@@ -2,8 +2,8 @@ import Link from "next/link";
 import styles from "./InvitationChapter.module.css";
 
 /**
- * Chapter 07 — Selective consulting.
- * Not a services list. A door, for a problem worth bringing.
+ * Chapter — Start a project.
+ * A door for a problem worth bringing, not a sales pitch.
  */
 export function InvitationChapter() {
   return (
@@ -14,10 +14,11 @@ export function InvitationChapter() {
         </h2>
         <div className={styles.body} data-reveal style={{ "--reveal-delay": "150ms" } as React.CSSProperties}>
           <p className={styles.text}>
-            We occasionally work with organizations on problems that require a different way of thinking.
+            Start with the problem, not the solution you have in mind. If Norns isn&rsquo;t the right fit, we will
+            say so.
           </p>
           <Link href="/contact/" className={`link ${styles.cta}`} prefetch={false}>
-            Talk to Norns <span className="arrow arrow--right" aria-hidden="true">→</span>
+            Start a project <span className="arrow arrow--right" aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

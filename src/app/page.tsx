@@ -1,29 +1,31 @@
 import { Hero } from "@/components/home/Hero";
-import { TimeChapter } from "@/components/home/TimeChapter";
+import { ApproachChapter } from "@/components/home/ApproachChapter";
 import { ProblemChapter } from "@/components/home/ProblemChapter";
+import { CapabilitiesChapter } from "@/components/home/CapabilitiesChapter";
+import { EngagementsChapter } from "@/components/home/EngagementsChapter";
 import { WorkChapter } from "@/components/home/WorkChapter";
-import { PurposeChapter } from "@/components/home/PurposeChapter";
-import { ResearchChapter } from "@/components/home/ResearchChapter";
+import { InsightsChapter } from "@/components/home/InsightsChapter";
 import { InvitationChapter } from "@/components/home/InvitationChapter";
-import { CompanyChapter } from "@/components/home/CompanyChapter";
+import { AboutChapter } from "@/components/home/AboutChapter";
 import { FinalChapter } from "@/components/home/FinalChapter";
 
 /**
- * The homepage is one continuous passage, not a stack of sections:
- * arrival → time → belief → work → purpose → research → invitation →
- * company → completion.
+ * One continuous passage: who Norns is → how it works → what it believes →
+ * what it does → how to begin → the evidence → the thinking → the invitation
+ * → the company → completion.
  */
 export default function Home() {
   return (
     <>
       <Hero />
-      <TimeChapter />
+      <ApproachChapter />
       <ProblemChapter />
+      <CapabilitiesChapter />
+      <EngagementsChapter />
       <WorkChapter />
-      <PurposeChapter />
-      <ResearchChapter />
+      <InsightsChapter />
       <InvitationChapter />
-      <CompanyChapter />
+      <AboutChapter />
       <FinalChapter />
     </>
   );

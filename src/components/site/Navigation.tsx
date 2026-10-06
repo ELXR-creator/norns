@@ -146,6 +146,7 @@ export function Navigation() {
                   <Link
                     ref={i === 0 ? firstLinkRef : undefined}
                     href={item.href}
+                    prefetch={false}
                     className={styles.entry}
                     onClick={(event) => onNavigate(event, item.href)}
                   >

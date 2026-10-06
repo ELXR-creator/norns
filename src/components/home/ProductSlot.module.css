@@ -10,13 +10,13 @@
 
 .frame {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background-color: var(--u-ground, var(--c-raised));
   border: var(--hairline) solid var(--c-line);
 }
 
-.slot[data-visibility="private"] .frame {
+.slot:not([data-themed]) .frame {
   background-image: repeating-linear-gradient(
     var(--mark-angle),
     transparent 0 15px,
@@ -47,17 +47,6 @@
   background-repeat: no-repeat;
 }
 
-.reserved {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: var(--s-2) var(--s-3);
-  background: var(--c-raised);
-  color: var(--c-text-2);
-  white-space: nowrap;
-}
-
 .visual {
   position: absolute;
   inset: 0;
@@ -69,6 +58,11 @@
 /* --- Caption ------------------------------------------------------------ */
 
 .caption {
+  display: grid;
+  row-gap: var(--s-3);
+}
+
+.metaRow {
   display: grid;
   grid-template-columns: 1fr auto auto;
   column-gap: var(--s-6);
@@ -83,14 +77,9 @@
   color: var(--c-text-3);
 }
 
-/* Public entries: the product's own voice inside the Norns frame. */
-.slot[data-visibility="public"] .caption {
-  grid-template-columns: 1fr;
-  row-gap: var(--s-3);
-}
-
 .name {
-  font-family: var(--u-font);
+  margin-top: var(--s-2);
+  font-family: var(--u-font, var(--font-sans));
   font-size: var(--fs-h3);
   line-height: var(--lh-heading);
   letter-spacing: var(--tr-heading);
@@ -109,7 +98,7 @@
 
 @media (min-width: 720px) {
   .frame {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 4 / 3;
   }
 
   .corners {

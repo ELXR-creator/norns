@@ -1,11 +1,13 @@
+import { capabilities } from "@/content/capabilities";
 import { FormSequence } from "./FormSequence";
 import styles from "./ProblemChapter.module.css";
 
-const forms = ["Software", "Infrastructure", "Intelligence", "Robotics", "Research"];
+const forms = capabilities.map((capability) => capability.name);
 
 /**
- * Chapter 03 — The Norns mentality.
- * The belief, then the demonstration: the form changes, the problem stays.
+ * Chapter — The Norns mentality.
+ * The belief, then the demonstration: the form of the answer changes with
+ * the problem, across all five disciplines.
  */
 export function ProblemChapter() {
   return (
@@ -16,7 +18,8 @@ export function ProblemChapter() {
           <span className={styles.bright}>We begin with a problem.</span>
         </h2>
         <p className={styles.support} data-reveal style={{ "--reveal-delay": "150ms" } as React.CSSProperties}>
-          Norns builds technology around problems worth solving. The form follows the problem.
+          The answer might be a knowledge graph, a pipeline, an AI system, a product — or advice not to build at
+          all. The form follows the problem.
         </p>
       </div>
 

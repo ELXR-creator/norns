@@ -7,10 +7,14 @@ export const site = {
   legalName: "Norns Ltd.",
   domain: "norns.ltd",
   url: "https://norns.ltd",
-  title: "Norns — Building What Comes Next",
+  title: "Norns — Product, Data & Intelligence",
   description:
-    "Norns is an independent technology company building products, systems and research around problems worth solving.",
+    "Norns helps organizations turn complex ideas and data into intelligent products and systems. We advise, architect and build.",
   statement: ["The future isn't predicted.", "It's constructed."] as const,
+  /** What Norns is, in one line. */
+  positioning: "Product. Data. Intelligence.",
+  /** What Norns does, in one sentence. */
+  promise: "We help organizations turn complex ideas and data into intelligent products and systems.",
   founder: "Piyush Jha",
   year: 2026,
   /**
@@ -24,10 +28,12 @@ export type NavItem = { label: string; href: string; note?: string };
 
 /** The Index. Order is the order of the page. */
 export const index: NavItem[] = [
-  { label: "Work", href: "/#work", note: "Things being built" },
-  { label: "Research", href: "/#research", note: "The archive" },
-  { label: "Company", href: "/#company", note: "Norns Ltd." },
-  { label: "Contact", href: "/contact/", note: "Bring a problem" },
+  { label: "Capabilities", href: "/#capabilities", note: "What we do" },
+  { label: "Engagements", href: "/#engagements", note: "Ways to begin" },
+  { label: "Work", href: "/#work", note: "Products and case studies" },
+  { label: "Insights", href: "/#insights", note: "Notes and research" },
+  { label: "About", href: "/#about", note: "Norns Ltd." },
+  { label: "Contact", href: "/contact/", note: "Start a project" },
 ];
 
 /**

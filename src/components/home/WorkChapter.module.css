@@ -5,7 +5,7 @@
 .head {
   display: grid;
   row-gap: var(--s-5);
-  margin-bottom: clamp(4rem, 10vh, 8rem);
+  margin-bottom: clamp(4rem, 10vh, 7rem);
 }
 
 .title {
@@ -15,13 +15,91 @@
 }
 
 .note {
-  max-width: 30ch;
+  max-width: 34ch;
   color: var(--c-text-2);
 }
 
-.slots {
+/* --- Groups ------------------------------------------------------------- */
+
+.group + .group {
+  margin-top: clamp(5rem, 12vh, 8rem);
+}
+
+.groupHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-bottom: var(--s-4);
+  margin-bottom: var(--s-6);
+  border-bottom: var(--hairline) solid var(--c-line-strong);
+}
+
+.groupTitle {
+  font-size: var(--fs-lead);
+  letter-spacing: var(--tr-lead);
+  font-weight: var(--fw-medium);
+}
+
+.products {
   display: grid;
-  row-gap: clamp(4rem, 12vh, 9rem);
+  row-gap: var(--s-8);
+  column-gap: var(--col-gap);
+}
+
+/* --- Case studies ------------------------------------------------------- */
+
+.empty {
+  max-width: 44ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  letter-spacing: var(--tr-lead);
+  color: var(--c-text-2);
+}
+
+.cases {
+  display: grid;
+}
+
+.case {
+  display: grid;
+  row-gap: var(--s-3);
+  padding-block: var(--s-6);
+  border-bottom: var(--hairline) solid var(--c-line);
+}
+
+.caseMeta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.caseTitle {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  letter-spacing: var(--tr-heading);
+  max-width: 28ch;
+}
+
+.caseApproach {
+  max-width: var(--measure);
+  color: var(--c-text-1);
+}
+
+.outcomes {
+  display: grid;
+  row-gap: var(--s-1);
+  color: var(--c-paper);
+}
+
+.outcomes li::before {
+  content: "→ ";
+  color: var(--c-text-3);
+}
+
+@media (min-width: 900px) {
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px) {
@@ -44,17 +122,7 @@
     padding-bottom: 0.4em;
   }
 
-  .slots {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--col-gap);
-  }
-
-  /* Equal in size, offset in position: two worlds, neither above the other. */
-  .item:nth-child(odd) {
-    grid-column: 1 / span 10;
-  }
-
-  .item:nth-child(even) {
-    grid-column: 3 / span 10;
+  .empty {
+    margin-left: calc((100% + var(--col-gap)) / 12 * 4);
   }
 }

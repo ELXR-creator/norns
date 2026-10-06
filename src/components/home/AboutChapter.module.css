@@ -1,4 +1,4 @@
-.company {
+.about {
   padding-block: var(--section-y);
 }
 
@@ -40,6 +40,13 @@
   align-items: baseline;
   padding-block: var(--s-4);
   border-bottom: var(--hairline) solid var(--c-line);
+}
+
+@media (max-width: 719px) {
+  .fact {
+    grid-template-columns: 1fr;
+    row-gap: var(--s-2);
+  }
 }
 
 .fact dt {

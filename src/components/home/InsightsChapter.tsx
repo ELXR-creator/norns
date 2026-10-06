@@ -1,22 +1,24 @@
 import { research } from "@/content/research";
-import styles from "./ResearchChapter.module.css";
+import styles from "./InsightsChapter.module.css";
 
 /**
- * Chapter 06 — Research.
- * An archive, not a blog. Entries that are not yet published say so, and
+ * Chapter — Insights.
+ * Architecture breakdowns, project lessons, research and notes from real
+ * work. An archive, not a blog. Entries that are not yet published say so, and
  * are not links.
  */
-export function ResearchChapter() {
+export function InsightsChapter() {
   return (
-    <section id="research" className={styles.research} data-chapter="Research" aria-labelledby="research-title" tabIndex={-1}>
+    <section id="insights" className={styles.insights} data-chapter="Insights" aria-labelledby="insights-title" tabIndex={-1}>
       <div className={`container ${styles.layout}`}>
         <header className={styles.head}>
           <p className="meta">Archive</p>
-          <h2 id="research-title" className={styles.title} data-reveal>
-            Research
+          <h2 id="insights-title" className={styles.title} data-reveal>
+            Insights
           </h2>
           <p className={styles.note} data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
-            Research, essays and technical notes from the work. Published when they are ready.
+            Architecture breakdowns, lessons from engagements, research and notes. Written from real work, published
+            when it is ready.
           </p>
         </header>
 
