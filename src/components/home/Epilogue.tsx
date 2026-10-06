@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { elsewhere, legal, site } from "@/content/site";
+import { FinalScene } from "./FinalScene";
 import { Threads } from "./Threads";
 import styles from "./Epilogue.module.css";
 
@@ -9,8 +9,8 @@ import styles from "./Epilogue.module.css";
  * Three threads, past, present and future, run down from separate
  * points and converge into one axis. Where they meet, they become a
  * single brighter line (three faint strokes overlapping), pointing at the
- * statement the whole page has been building towards. Then a pause, the
- * smallest possible colophon, and the name — the page's last frame.
+ * statement the whole page has been building towards. Then the final
+ * scene: the name, distilled into the symbol.
  *
  * The opening said: the future isn't predicted, it's constructed.
  * The ending answers: build what is needed. Norns.
@@ -59,37 +59,10 @@ export function Epilogue() {
           </Link>
         </div>
 
-        <footer className={styles.colophon}>
-          <p className="meta">
-            © {site.year} {site.legalName}
-          </p>
-          <ul className={styles.colophonLinks}>
-            {legal.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} className={`meta ${styles.colophonLink}`} prefetch={false}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-            {elsewhere.map((item) => (
-              <li key={item.label}>
-                <a href={item.href} className={`meta ${styles.colophonLink}`} target="_blank" rel="noopener">
-                  {item.label} <span aria-hidden="true">↗</span>
-                  <span className="sr-only">(opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </footer>
       </div>
 
-      {/* The end of the page: the name, wider than the content column,
-          its lower part fading past the visible plane. Nothing follows it. */}
-      <div className={styles.titleCard}>
-        <p className={styles.wordmark} data-reveal>
-          {site.name}
-        </p>
-      </div>
+      {/* The last scene: the name gives way to the symbol. */}
+      <FinalScene />
     </section>
   );
 }

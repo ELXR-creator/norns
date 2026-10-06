@@ -1,0 +1,243 @@
+/* The final scene: NORNS → symbol.
+
+   Default (no script, or reduced motion): a still sequence — the name,
+   the symbol, the credits — so the ending reads without animation.
+   With script and motion: one sticky frame, scrolled through natively,
+   in which the name gives way to the mark. */
+
+.scene {
+  margin-top: clamp(5rem, 14vh, 9rem);
+}
+
+.stage {
+  /* Container units: cqw is the full window width (scrollbar excluded). */
+  container-type: inline-size;
+  display: grid;
+  justify-items: center;
+  row-gap: clamp(3.5rem, 10vh, 6rem);
+  padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.echo,
+.threads {
+  display: none;
+}
+
+/* --- The name -----------------------------------------------------------
+   Uppercase, its ink spanning ~94% of the window (NORNS sets 3.343em wide
+   at this tracking), optically centred. The mask dissolves it from its
+   foot upward; --edge is where the letters have fully gone. */
+
+.word {
+  --edge: 104%;
+  width: 100%;
+  font-size: 24vw;
+  font-size: calc(94cqw / 3.343);
+  font-weight: var(--fw-medium);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  padding-right: 0.057em;
+  color: var(--c-paper);
+  --mask: linear-gradient(
+    to bottom,
+    #000 calc(var(--edge) - 34%),
+    rgb(0 0 0 / 0.62) calc(var(--edge) - 20%),
+    rgb(0 0 0 / 0.2) calc(var(--edge) - 9%),
+    transparent var(--edge)
+  );
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+  user-select: none;
+}
+
+/* --- The symbol ---------------------------------------------------------
+   The existing mark, unaltered, treated as the subject of the frame. */
+
+.mark {
+  width: clamp(15rem, 26vw, 30rem);
+  color: var(--c-paper);
+}
+
+.symbol {
+  width: 100%;
+  height: auto;
+}
+
+/* --- Credits ------------------------------------------------------------ */
+
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2) var(--s-6);
+  width: 100%;
+  padding-inline: var(--gutter-left) var(--gutter-right);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-6);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 2.75rem;
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--c-paper);
+}
+
+/* ==========================================================================
+   The scene
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(.js) .scene {
+    height: 220svh;
+  }
+
+  :global(.js) .stage {
+    position: sticky;
+    top: 0;
+    display: block;
+    height: 100svh;
+    padding: 0;
+    /* Bounds the oversized echo; the name and symbol sit well inside. */
+    overflow: clip;
+  }
+
+  /* The outline of the mark, enormous and barely there, drifting at its
+     own rate. It opened the site as a drawing; it closes it the same way. */
+  :global(.js) .echo {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    width: max(150cqw, 90rem);
+    height: auto;
+    color: var(--c-paper);
+    opacity: calc(0.09 * var(--mark, 0));
+    transform: translate(-50%, -50%) translateY(calc((0.5 - var(--p, 0)) * 10svh));
+    pointer-events: none;
+  }
+
+  /* NORNS fills the upper half as the scene arrives, then dissolves from
+     its foot upward until nothing of it remains. */
+  :global(.js) .word {
+    --edge: calc(104% - var(--word, 0) * 140%);
+    position: absolute;
+    top: calc(var(--nav-h) + 4svh);
+    left: 0;
+  }
+
+  /* Past, present, future: three hairlines from the name into the mark.
+     They draw downward, then fade once the mark has formed. */
+  :global(.js) .threads {
+    display: block;
+    position: absolute;
+    /* A narrow column under the name, so the threads fall rather than
+       stretch across the frame. */
+    left: 50%;
+    width: min(100%, 40rem);
+    translate: -50% 0;
+    /* From inside the dissolving letters to the mark's centre as it
+       passes: the threads emerge from the name and run into the symbol. */
+    top: 30%;
+    height: 25%;
+    overflow: visible;
+    opacity: var(--threads, 0);
+    clip-path: inset(0 0 calc((1 - var(--draw, 0)) * 100%) 0);
+    pointer-events: none;
+  }
+
+  :global(.js) .threads path {
+    fill: none;
+    stroke: rgb(236 235 231 / 0.3);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* The mark rises out of near-invisibility to just above the centre of
+     the frame — the optical centre, not the geometric one. */
+  :global(.js) .mark {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    opacity: calc(0.035 + 0.965 * var(--mark, 0));
+    transform: translate(-50%, -50%) translateY(calc((1 - var(--mark, 0)) * 13svh))
+      scale(calc(0.82 + 0.18 * var(--mark, 0)));
+    will-change: transform, opacity;
+  }
+
+  /* End credits: only once the mark has settled. */
+  :global(.js) .credits {
+    position: absolute;
+    left: 0;
+    bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
+    opacity: var(--credits, 0);
+    transform: translateY(calc((1 - var(--credits, 0)) * 0.5rem));
+  }
+
+  :global(.js) .scene:not([data-credits]) .credits {
+    pointer-events: none;
+  }
+
+  /* A keyboard user reaching the links always sees them. */
+  :global(.js) .credits:focus-within {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Phones -------------------------------------------------------------
+   The name still spans the width; the mark becomes far larger relative to
+   the screen, and the threads have further to fall. */
+
+@media (max-width: 719px) {
+  .mark {
+    width: 66vw;
+  }
+
+  .credits {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .links {
+    gap: 0 var(--s-5);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .scene {
+      height: 190svh;
+    }
+
+    :global(.js) .word {
+      top: calc(var(--nav-h) + 9svh);
+    }
+
+    :global(.js) .threads {
+      top: 22%;
+      height: 36%;
+    }
+
+    :global(.js) .mark {
+      top: 52%;
+    }
+
+    :global(.js) .echo {
+      top: 52%;
+      width: 280cqw;
+    }
+  }
+}
