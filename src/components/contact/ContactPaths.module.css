@@ -1,0 +1,385 @@
+/* Find us: one thread with routes branching off it.
+
+   Geometry: the thread is the left edge of this element (x = 0). Every
+   route is laid out the same way — a branch curving off the thread, a
+   glyph, then the words — so the routes read as one system:
+
+     │
+     ╰──── ◦  WRITE
+     │        hello@norns.ltd
+*/
+
+.paths {
+  --branch-w: 2.75rem; /* the branch svg is 44 × 20 */
+  --glyph-s: 1.5rem;
+  --gap: var(--s-3);
+  --text-x: calc(var(--branch-w) + var(--glyph-s) + 2 * var(--gap));
+  --mark-h: 1.5rem;
+  --mark-w: 2.79rem; /* the mark is 1720 × 926 */
+  --head-h: 2.5rem;
+  --thread: var(--c-text-4);
+  --lit: var(--c-text-2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.trunk {
+  position: absolute;
+  left: 0;
+  width: var(--hairline);
+  background: var(--thread);
+  transform-origin: top;
+  transition: background-color var(--dur-2) var(--ease-standard);
+}
+
+/* --- Head: the mark, and where the routes begin ------------------------ */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  height: var(--head-h);
+  /* Centre the mark on the thread. */
+  margin-left: calc(var(--mark-w) / -2);
+}
+
+.origin {
+  flex: none;
+  height: var(--mark-h);
+  width: var(--mark-w);
+  color: var(--c-paper);
+}
+
+/* --- Routes ------------------------------------------------------------- */
+
+.routes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.route {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--branch-w) var(--glyph-s) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: var(--gap);
+  align-items: center;
+  align-content: start;
+  padding-top: 0.5rem;
+  transition: opacity var(--dur-2) var(--ease-standard);
+}
+
+/* The thread passing this route, drawn only when it is lit. */
+.route::before,
+.routes::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--hairline);
+  height: 100%;
+  background: var(--lit);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-standard);
+}
+
+.branch {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--branch-w);
+  height: 1.25rem;
+  overflow: visible;
+}
+
+.branch path {
+  fill: none;
+  stroke: var(--thread);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke var(--dur-2) var(--ease-standard);
+}
+
+.glyph {
+  grid-column: 2;
+  grid-row: 1;
+  width: var(--glyph-s);
+  height: var(--glyph-s);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--c-text-2);
+  transition:
+    color var(--dur-2) var(--ease-standard),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.label {
+  grid-column: 3;
+  grid-row: 1;
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.links {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-5);
+  margin-top: var(--s-1);
+}
+
+.out {
+  font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.3125rem);
+  letter-spacing: var(--tr-lead);
+  white-space: nowrap;
+}
+
+/* A comfortable target, whatever the size of the words. */
+.out::after {
+  content: "";
+  position: absolute;
+  inset: -0.55rem -0.35rem;
+}
+
+/* --- Where the paths meet ------------------------------------------------ */
+
+.end {
+  position: relative;
+  height: 3rem;
+}
+
+.end::before {
+  content: "";
+  position: absolute;
+  left: calc(0.5px - 0.25rem);
+  top: calc(50% - 0.25rem);
+  width: 0.5rem;
+  height: 0.5rem;
+  border: var(--hairline) solid var(--c-text-3);
+  border-radius: 50%;
+  background: var(--c-ground);
+  transition:
+    background-color var(--dur-3) var(--ease-standard),
+    border-color var(--dur-3) var(--ease-standard);
+}
+
+.terminus {
+  display: none;
+}
+
+/* ==========================================================================
+   Desktop: the mark at the head, routes spread down to where the form's
+   thread arrives.
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  .paths {
+    height: 100%;
+  }
+
+  .trunk {
+    top: var(--head-h);
+    bottom: 1.5rem;
+  }
+
+  .routes {
+    flex: 1;
+    padding-top: var(--s-7);
+  }
+
+  .routes::before {
+    height: var(--s-7);
+  }
+
+  .route {
+    flex: 1 1 0;
+    min-height: 4.75rem;
+  }
+
+  /* Choosing a route lights the thread from the mark to it; the others
+     step back. */
+  .routes:has(.out:hover)::before,
+  .routes:has(.out:focus-visible)::before,
+  .route:has(~ .route .out:hover)::before,
+  .route:has(~ .route .out:focus-visible)::before {
+    opacity: 1;
+  }
+
+  .routes:has(.out:hover) .route:not(:has(.out:hover)),
+  .routes:has(.out:focus-visible) .route:not(:has(.out:focus-visible)) {
+    opacity: 0.42;
+  }
+
+  .route:has(.out:hover) .branch path,
+  .route:has(.out:focus-visible) .branch path {
+    stroke: var(--lit);
+  }
+
+  .route:has(.out:hover) .glyph,
+  .route:has(.out:focus-visible) .glyph {
+    color: var(--c-paper);
+    transform: translateX(0.125rem);
+  }
+
+  .route:has(.out:hover) .label,
+  .route:has(.out:focus-visible) .label {
+    color: var(--c-paper);
+  }
+
+  /* Sending lights the whole thread: the form is a path in too. */
+  :global([data-contact]:has([data-send]:hover)) .trunk,
+  :global([data-contact]:has([data-send]:focus-visible)) .trunk {
+    background: var(--lit);
+  }
+}
+
+/* Delivered: the thread stays lit, the meeting point is filled. */
+:global([data-contact]:has([data-sent])) .trunk {
+  background: var(--lit);
+}
+
+:global([data-contact]:has([data-sent])) .end::before {
+  background: var(--c-paper);
+  border-color: var(--c-paper);
+}
+
+/* ==========================================================================
+   Phones and tablets: one continuing path. It leaves the form, passes each
+   route, and ends on the mark.
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .paths {
+    --head-h: auto;
+    margin-top: clamp(2.5rem, 7svh, 3.5rem);
+    padding-left: 1.25rem;
+  }
+
+  .trunk {
+    left: 1.25rem;
+    top: 0;
+    bottom: calc(var(--mark-h) + var(--s-5));
+    background: linear-gradient(to bottom, transparent, var(--thread) 4rem);
+  }
+
+  .head {
+    position: relative;
+    margin-left: 0;
+    padding: clamp(3rem, 8svh, 4.5rem) 0 var(--s-6) var(--text-x);
+  }
+
+  .head .origin {
+    display: none;
+  }
+
+  /* A node on the thread beside the heading. */
+  .head::before {
+    content: "";
+    position: absolute;
+    left: calc(0.5px - 0.1875rem);
+    bottom: calc(var(--s-6) + 0.3125rem);
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: var(--c-text-2);
+  }
+
+  .route {
+    padding-bottom: clamp(2.25rem, 6svh, 3rem);
+  }
+
+  .end {
+    display: none;
+  }
+
+  .terminus {
+    display: block;
+    align-self: flex-start;
+    height: var(--mark-h);
+    width: var(--mark-w);
+    margin: var(--s-2) 0 0 calc(var(--mark-w) / -2);
+    color: var(--c-paper);
+  }
+
+  :global([data-contact]:has([data-sent])) .trunk {
+    background: linear-gradient(to bottom, transparent, var(--lit) 4rem);
+  }
+}
+
+/* ==========================================================================
+   Arrival: the thread grows, branches extend, routes settle. Quick, and
+   everything is usable throughout. Reduced motion: drawn at rest.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The container itself is not faded — only its parts arrive. */
+  :global(.reveal-ready) .paths[data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(.reveal-ready) .paths:not([data-revealed]):not(:focus-within) :is(.trunk, .branch, .glyph, .label, .links, .head, .end, .terminus) {
+    opacity: 0;
+  }
+
+  .paths[data-revealed] .trunk {
+    animation: grow 900ms var(--ease-out) backwards;
+  }
+
+  .paths[data-revealed] .head,
+  .paths[data-revealed] .end,
+  .paths[data-revealed] .terminus {
+    animation: appear 700ms var(--ease-out) backwards;
+  }
+
+  .paths[data-revealed] .end,
+  .paths[data-revealed] .terminus {
+    animation-delay: 600ms;
+  }
+
+  .paths[data-revealed] .branch path {
+    animation: draw 600ms var(--ease-out) backwards;
+    animation-delay: calc(220ms + var(--i) * 110ms);
+  }
+
+  .paths[data-revealed] :is(.glyph, .label, .links) {
+    animation: settle 560ms var(--ease-out) backwards;
+    animation-delay: calc(340ms + var(--i) * 110ms);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateX(-0.375rem);
+  }
+}

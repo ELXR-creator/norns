@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { bookingUrl, site } from "@/content/site";
+import { ContactPaths } from "@/components/contact/ContactPaths";
+import { legal, site } from "@/content/site";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -9,34 +11,43 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact/" },
 };
 
+/**
+ * Tell us, or find us. Two routes into the same place: the form on the
+ * left, and the other paths on the right, joined by one thread. The site
+ * footer stands down here — its destinations are part of the page.
+ */
 export default function ContactPage() {
   return (
-    <section className={styles.contact} data-chapter="Contact" aria-labelledby="contact-title">
+    <section className={styles.contact} data-chapter="Contact" data-contact aria-labelledby="contact-title">
       <div className={`container ${styles.layout}`}>
-        <header className={styles.head}>
-          <p className="meta">Contact</p>
-          <h1 id="contact-title" className={styles.title}>
-            Tell us what you&rsquo;re trying to solve.
-          </h1>
-          <p className={styles.note}>Describe the problem, not the solution you have in mind.</p>
-          <p className={styles.direct}>
-            <span className="meta">Or write directly</span>
-            <a className="link" href={`mailto:${site.contactEmail}`}>
-              {site.contactEmail}
-            </a>
-          </p>
-          {bookingUrl ? (
-            <p className={styles.direct}>
-              <span className="meta">Or book a call</span>
-              <a className="link" href={bookingUrl} target="_blank" rel="noopener">
-                Choose a time <span className="arrow" aria-hidden="true">↗</span>
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
-            </p>
-          ) : null}
-        </header>
+        <div className={styles.tell}>
+          <header className={styles.head}>
+            <p className="meta">Tell us</p>
+            <h1 id="contact-title" className={styles.title}>
+              <span>Tell us what</span> <span>you&rsquo;re trying</span> <span>to solve.</span>
+            </h1>
+            <p className={styles.note}>Describe the problem, not the solution you have in mind.</p>
+          </header>
 
-        <ContactForm email={site.contactEmail} endpoint={site.formEndpoint || undefined} />
+          <ContactForm email={site.contactEmail} endpoint={site.formEndpoint || undefined} />
+        </div>
+
+        <ContactPaths />
+
+        <footer className={styles.credits}>
+          <p className="meta">
+            © {site.year} {site.legalName}
+          </p>
+          <ul className={styles.legal}>
+            {legal.map((item) => (
+              <li key={item.label}>
+                <Link href={item.href} className={`meta ${styles.small}`} prefetch={false}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </footer>
       </div>
     </section>
   );

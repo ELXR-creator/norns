@@ -1,30 +1,42 @@
-/* A ruled sheet: compact enough that the whole form, and its send link,
-   sit in one screen on a laptop. */
+/* A ruled sheet. Three short answers set small and side by side; the
+   problem below them given the room of a page. */
 .form {
+  display: grid;
+  row-gap: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.details {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   column-gap: var(--col-gap);
   row-gap: var(--s-6);
 }
 
+@media (min-width: 720px) {
+  .details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .details > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .details {
+    grid-template-columns: 1fr 1.25fr 1fr;
+  }
+
+  .details > :last-child {
+    grid-column: auto;
+  }
+}
+
 .field {
   display: grid;
   row-gap: var(--s-2);
-}
-
-.half {
+  align-content: start;
   min-width: 0;
-}
-
-.full,
-.actions {
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 720px) {
-  .form {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .optional {
@@ -37,8 +49,8 @@
   width: 100%;
   padding: 0.25rem 0 0.6rem;
   font: inherit;
-  font-size: var(--fs-lead);
-  letter-spacing: var(--tr-lead);
+  font-size: var(--fs-body);
+  letter-spacing: -0.005em;
   color: var(--c-paper);
   background: transparent;
   border: 0;
@@ -57,32 +69,121 @@
   outline: none;
 }
 
+/* --- The problem: the centre of the page -------------------------------- */
+
+.problem {
+  row-gap: var(--s-4);
+}
+
+.problemLabel {
+  font-size: clamp(1.375rem, 0.95rem + 1.2vw, 2.125rem);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  color: var(--c-paper);
+}
+
 .area {
   resize: vertical;
-  min-height: 6.5rem;
+  min-height: clamp(6.5rem, 16vh, 10.5rem);
+  padding-top: var(--s-3);
+  font-size: var(--fs-lead);
+  letter-spacing: var(--tr-lead);
   line-height: var(--lh-lead);
+  /* Ruled like a sheet: faint lines at the text's own leading. */
+  background-image: linear-gradient(to bottom, transparent calc(100% - var(--hairline)), var(--c-line) 0);
+  background-size: 100% calc(var(--fs-lead) * 1.42);
+  background-position: 0 calc(var(--s-3) + 0.2em);
+  background-attachment: local;
+}
+
+/* --- Attention ----------------------------------------------------------- */
+
+.field[data-invalid] .input {
+  border-bottom-color: var(--c-paper);
+}
+
+.field[data-invalid] label {
+  color: var(--c-paper);
+}
+
+.fieldError {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-size: var(--fs-small);
+  color: var(--c-paper);
+}
+
+.fieldError::before {
+  content: "";
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateY(-0.1em);
+}
+
+/* --- Send ---------------------------------------------------------------- */
+
+.send {
+  position: relative;
+  display: grid;
+  row-gap: var(--s-2);
 }
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--s-3) var(--s-6);
-  padding-top: var(--s-2);
+  align-items: center;
+  gap: var(--s-5);
+  min-height: 3rem;
 }
 
 .submit {
+  flex: none;
   font-size: var(--fs-lead);
   letter-spacing: var(--tr-lead);
 }
 
-.hint {
-  font-size: var(--fs-small);
+.submit:disabled {
+  cursor: progress;
   color: var(--c-text-2);
 }
 
-.submit:disabled {
-  cursor: progress;
+/* The form's own thread. On desktop it runs on across the gap and meets
+   the paths where they end: the form is one more way into the same place. */
+.thread {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .thread {
+    display: block;
+    flex: 1;
+    min-width: var(--s-6);
+    height: var(--hairline);
+    margin-right: calc(-1 * var(--col-gap) + 0.25rem);
+    background: linear-gradient(to right, transparent, var(--c-text-4) 6rem);
+    transition: background-color var(--dur-2) var(--ease-standard);
+  }
+
+  .submit:is(:hover, :focus-visible) + .thread,
+  .confirmation .thread {
+    background: linear-gradient(to right, transparent, var(--c-text-2) 6rem);
+  }
+
+  /* Out of the layout, so the send row is the column's last line. */
+  .hint {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding-top: var(--s-1);
+  }
+}
+
+.hint {
+  font-size: var(--fs-small);
   color: var(--c-text-2);
 }
 
@@ -99,21 +200,60 @@
   opacity: 0;
 }
 
+/* --- Received ------------------------------------------------------------ */
+
 .confirmation {
-  display: grid;
-  row-gap: var(--s-4);
-  align-content: start;
-  padding-top: var(--s-6);
-  border-top: var(--hairline) solid var(--c-line-strong);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: var(--s-7);
 }
 
 .confirmation:focus {
   outline: none;
 }
 
-.thanks {
+.received {
+  display: grid;
+  row-gap: var(--s-4);
+  padding-top: var(--s-6);
+  border-top: var(--hairline) solid var(--c-line-strong);
+}
+
+.receivedTitle {
   font-size: var(--fs-h3);
   line-height: var(--lh-heading);
   letter-spacing: var(--tr-heading);
-  max-width: 20ch;
+}
+
+.receivedNote {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  color: var(--c-text-2);
+}
+
+.delivered {
+  flex: none;
+  color: var(--c-paper);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .received > * {
+    animation: arrive var(--dur-4) var(--ease-out) backwards;
+  }
+
+  .received > :nth-child(2) {
+    animation-delay: 140ms;
+  }
+
+  .received > :nth-child(3) {
+    animation-delay: 280ms;
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
 }

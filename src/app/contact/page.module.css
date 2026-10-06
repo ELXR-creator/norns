@@ -1,37 +1,64 @@
 .contact {
-  padding-block: calc(var(--nav-h) + clamp(2rem, 9vh, 5.5rem)) var(--section-y);
+  padding-block: calc(var(--nav-h) + clamp(1.25rem, 4.5vh, 3.5rem)) calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
 }
 
 .layout {
   display: grid;
-  row-gap: clamp(2.5rem, 7vh, 4rem);
+}
+
+.tell {
+  display: grid;
+  row-gap: clamp(1.75rem, 4.5vh, 3rem);
+  align-content: start;
+  min-width: 0;
 }
 
 .head {
   display: grid;
-  row-gap: var(--s-5);
-  align-content: start;
+  row-gap: var(--s-4);
 }
 
 .title {
   font-size: var(--fs-h2);
   line-height: var(--lh-heading);
   letter-spacing: var(--tr-heading);
-  max-width: 14ch;
+}
+
+/* Set as three lines at every size: it is a composition, not a paragraph. */
+.title span {
+  display: block;
 }
 
 .note {
-  max-width: 28ch;
+  max-width: 30ch;
   font-size: var(--fs-lead);
   line-height: var(--lh-lead);
   color: var(--c-text-2);
 }
 
-.direct {
-  display: grid;
-  justify-items: start;
-  row-gap: var(--s-2);
-  margin-top: var(--s-3);
+/* Quiet credits, not a footer. */
+.credits {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-5);
+  margin-top: clamp(3.5rem, 9vh, 5.5rem);
+}
+
+.legal {
+  display: flex;
+  gap: var(--s-5);
+}
+
+.small {
+  display: inline-block;
+  padding-block: 0.75rem;
+  margin-block: -0.75rem;
+  transition: color var(--dur-2) var(--ease-standard);
+}
+
+.small:hover {
+  color: var(--c-paper);
 }
 
 @media (min-width: 1024px) {
@@ -40,27 +67,56 @@
     column-gap: var(--col-gap);
   }
 
-  .head {
-    grid-column: 1 / span 5;
-    position: sticky;
-    top: calc(var(--nav-h) + var(--s-6));
-    align-self: start;
+  .tell {
+    grid-column: 1 / span 8;
   }
 
-  .layout > :last-child {
-    grid-column: 7 / span 6;
-    padding-top: 2rem;
+  /* The note takes the room beside the headline rather than a line of its
+     own: it answers the last line, "to solve." */
+  .head {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--col-gap);
+  }
+
+  .head > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .note {
+    align-self: end;
+    justify-self: end;
+    max-width: 19ch;
+    padding-bottom: 0.35em;
+  }
+
+  .layout > nav {
+    grid-column: 9 / span 4;
+  }
+
+  /* The credits keep the page's two columns: Privacy sits on the thread. */
+  .credits {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  .credits > :first-child {
+    grid-column: 1 / span 8;
+  }
+
+  .legal {
+    grid-column: 9 / span 4;
   }
 }
 
-/* Tablets and phones: head above form, kept tight so the form follows
-   quickly. */
-@media (max-width: 1023px) {
-  .layout {
-    row-gap: 2rem;
+/* Phone headline: sized for the three lines to hold their full width. */
+@media (max-width: 719px) {
+  .title {
+    font-size: min(13.4vw, 3.6rem);
+    line-height: 0.98;
   }
 
-  .direct {
-    margin-top: 0;
+  .credits {
+    margin-top: var(--s-7);
   }
 }

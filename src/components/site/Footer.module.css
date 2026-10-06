@@ -12,3 +12,8 @@
 :global(main:has([data-final])) + .footer {
   display: none;
 }
+
+/* The contact page carries its own routes and credits. */
+:global(main:has([data-contact])) + .footer {
+  display: none;
+}
