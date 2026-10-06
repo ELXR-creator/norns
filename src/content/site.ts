@@ -39,10 +39,10 @@ export const index: NavItem[] = [
  * low-cost gig work and undercut the Norns positioning.
  */
 export const profiles = {
-  linkedin: { label: "LinkedIn", href: "" },
-  github: { label: "GitHub", href: "" },
-  upwork: { label: "Upwork", href: "" },
-  contra: { label: "Contra", href: "" },
+  linkedin: { label: "LinkedIn", href: "https://www.linkedin.com/in/jhapiyush006" },
+  github: { label: "GitHub", href: "https://github.com/ELXR-creator" },
+  upwork: { label: "Upwork", href: "https://www.upwork.com/freelancers/~018feb0f74d4020eaa" },
+  contra: { label: "Contra", href: "https://contra.com/piyush_jha_2h3tui2m" },
 } satisfies Record<string, NavItem>;
 
 export const elsewhere: NavItem[] = Object.values(profiles).filter((p) => p.href);
@@ -51,6 +51,6 @@ export const elsewhere: NavItem[] = Object.values(profiles).filter((p) => p.href
  * A scheduling link (Cal.com, Calendly) for a first call. Shown on the
  * contact page beside the email address once set.
  */
-export const bookingUrl = "";
+export const bookingUrl = "https://calendly.com/jhapiyush";
 
 export const legal: NavItem[] = [{ label: "Privacy", href: "/privacy/" }];
