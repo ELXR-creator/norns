@@ -36,7 +36,7 @@
 
 .identity {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.9rem;
   min-width: 0;
   pointer-events: auto;
@@ -46,11 +46,18 @@
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  font-size: 1.125rem;
-  font-weight: var(--fw-medium);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  padding-block: 0.75rem;
+  color: var(--c-paper);
+}
+
+/* The compact symbol: small enough to stay an identifier, never a banner. */
+.symbol {
+  height: 1.3rem;
+  width: auto;
+  transition: opacity var(--dur-2) var(--ease-standard);
+}
+
+.wordmark:hover .symbol {
+  opacity: 0.75;
 }
 
 .chapter {

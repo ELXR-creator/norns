@@ -9,8 +9,8 @@ import styles from "./Epilogue.module.css";
  * Three threads, past, present and future, run down from separate
  * points and converge into one axis. Where they meet, they become a
  * single brighter line (three faint strokes overlapping), pointing at the
- * statement the whole page has been building towards. Then a pause, and
- * the name.
+ * statement the whole page has been building towards. Then a pause, the
+ * smallest possible colophon, and the name — the page's last frame.
  *
  * The opening said: the future isn't predicted, it's constructed.
  * The ending answers: build what is needed. Norns.
@@ -59,12 +59,6 @@ export function Epilogue() {
           </Link>
         </div>
 
-        <div className={styles.titleCard}>
-          <p className={styles.wordmark} data-reveal>
-            {site.name}
-          </p>
-        </div>
-
         <footer className={styles.colophon}>
           <p className="meta">
             © {site.year} {site.legalName}
@@ -87,6 +81,14 @@ export function Epilogue() {
             ))}
           </ul>
         </footer>
+      </div>
+
+      {/* The end of the page: the name, wider than the content column,
+          its lower part fading past the visible plane. Nothing follows it. */}
+      <div className={styles.titleCard}>
+        <p className={styles.wordmark} data-reveal>
+          {site.name}
+        </p>
       </div>
     </section>
   );

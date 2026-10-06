@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { NornsMark } from "@/components/brand/NornsMark";
 import { index, site } from "@/content/site";
 import styles from "./Navigation.module.css";
 
@@ -112,8 +113,9 @@ export function Navigation() {
       <header className={styles.bar} data-open={open || undefined}>
         <div className={`container ${styles.inner}`}>
           <p className={styles.identity}>
+            {/* The entrance: the symbol. The name is kept for the end. */}
             <Link href="/" className={styles.wordmark} aria-label={`${site.name}, home`}>
-              {site.name}
+              <NornsMark className={styles.symbol} />
             </Link>
             {chapter && !open ? (
               <span key={chapter} className={styles.chapter} aria-hidden="true">

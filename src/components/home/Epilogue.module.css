@@ -4,7 +4,7 @@
    simply ends below the title card, so the name is always fully in view. */
 
 .epilogue {
-  padding-block: var(--section-y-quiet) var(--s-5);
+  padding-block: var(--section-y-quiet) env(safe-area-inset-bottom, 0px);
   background: linear-gradient(to bottom, var(--c-ground), var(--c-void) 30%);
 }
 
@@ -129,28 +129,61 @@
 }
 
 /* --- Title card ---------------------------------------------------------
-   The name, set to the width of the page. Sized in container units, so it
-   fills the content width at every size and can never overflow it:
-   "NORNS" sets at ~3.3× its font size, so 29.5cqw leaves a hair of room. */
+   The page's last frame: the name, uppercase, spanning ~94% of the
+   window — wider than the content column — with its lower part fading
+   past the visible plane. All five letters exist whole in the layout:
+   nothing clips them; only an opacity mask takes the bottom away.
+
+   Sizing: the title card is a full-width container, so cqw is the
+   window's width (scrollbar excluded). At this tracking, NORNS's ink
+   measures INK_EM × the font size; the font size is set so the ink is
+   94% of the width. */
 
 .titleCard {
-  margin-top: clamp(10rem, 56vh, 42rem);
+  --ink-em: 3.343;
+  --span: 94;
+  margin-top: clamp(1.75rem, 4vh, 3rem);
   container-type: inline-size;
+  /* The font's descent area (empty for NORNS, which has no descenders)
+     reaches below the tight line box and would otherwise lengthen the
+     page with a blank band. Trim at the card's edge, plus a margin: the
+     letters' ink sits wholly inside the box, so no letter is touched. */
+  overflow: clip;
+  overflow-clip-margin: 0.04em;
 }
 
 .wordmark {
-  font-size: 26vw; /* fallback where container units are unsupported */
-  font-size: 29.5cqw;
+  font-size: 24vw; /* fallback where container units are unsupported */
+  font-size: calc(var(--span) * 1cqw / var(--ink-em));
   font-weight: var(--fw-medium);
-  line-height: 0.8;
-  letter-spacing: -0.045em;
+  /* Tight, but the letters' ink (0.07em–0.80em) stays inside the box. */
+  line-height: 0.86;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   text-align: center;
-  /* Optical centring: the N's side-bearing and the tracking after the S
-     put the letters' ink 0.04em right of the box's centre. */
-  padding-right: 0.08em;
-  padding-top: 0.04em;
   color: var(--c-paper);
+  /* Optical centring for the N's side-bearing and the S's tracking. */
+  padding-right: 0.057em;
+  /* The fade: solid through the upper part of the letters, gone by
+     their foot. Stops are placed on the letters, not the line box: in
+     this box the caps run from ~8% to ~93%, so the upper ~72% of each
+     letter stays solid and the lower part dissolves. */
+  /* Eased, so the fade has no visible starting edge: it begins almost
+     imperceptibly and is complete just above the letters' foot. */
+  --fade: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 60%,
+    rgb(0 0 0 / 0.94) 65%,
+    rgb(0 0 0 / 0.8) 70%,
+    rgb(0 0 0 / 0.58) 75%,
+    rgb(0 0 0 / 0.36) 80%,
+    rgb(0 0 0 / 0.17) 85%,
+    rgb(0 0 0 / 0.05) 89%,
+    transparent 92%
+  );
+  -webkit-mask-image: var(--fade);
+  mask-image: var(--fade);
 }
 
 /* The name arrives slower than anything else on the page. */
@@ -166,7 +199,7 @@
   justify-content: space-between;
   align-items: baseline;
   gap: var(--s-3) var(--s-6);
-  margin-top: clamp(2.5rem, 6vh, 4rem);
+  margin-top: clamp(10rem, 58vh, 44rem);
   padding-top: var(--s-4);
   border-top: var(--hairline) solid var(--c-line);
 }
@@ -198,10 +231,6 @@
    from assistive technology, so the reading order is unchanged. */
 
 @media (max-width: 719px) {
-  .epilogue {
-    padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
-  }
-
   .threads {
     padding-left: 2.25rem;
     padding-bottom: clamp(8rem, 26svh, 12rem);
@@ -257,8 +286,8 @@
     margin-left: 0;
   }
 
-  .titleCard {
-    margin-top: clamp(8rem, 44vh, 22rem);
+  .colophon {
+    margin-top: clamp(7rem, 36vh, 18rem);
   }
 
   .colophon {
