@@ -36,7 +36,7 @@ export default function ContactPage() {
           ) : null}
         </header>
 
-        <ContactForm email={site.contactEmail} />
+        <ContactForm email={site.contactEmail} endpoint={site.formEndpoint || undefined} />
       </div>
     </section>
   );

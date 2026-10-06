@@ -48,7 +48,7 @@
     align-self: start;
   }
 
-  .layout > form {
+  .layout > :last-child {
     grid-column: 7 / span 6;
     padding-top: 2.1rem;
   }

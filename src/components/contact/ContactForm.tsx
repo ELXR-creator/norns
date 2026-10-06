@@ -1,34 +1,83 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import styles from "./ContactForm.module.css";
 
 type Fields = { name: string; email: string; organization: string; problem: string };
+type Status = "idle" | "sending" | "sent" | "error";
 
 /**
  * Four questions, and the one that matters is the last.
  *
- * There is no server behind this site, so the form composes an email to
- * Norns in the visitor's own mail client — and says so. Without scripting
- * the browser's native mailto submission is used.
+ * With a form endpoint (Formspree), the message is delivered to Norns
+ * directly and the visitor stays on the page. Without one, the form falls
+ * back to composing an email in the visitor's own mail client — and says so.
  */
-export function ContactForm({ email }: { email: string }) {
+export function ContactForm({ email, endpoint }: { email: string; endpoint?: string }) {
   const id = useId();
-  const [composed, setComposed] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [sender, setSender] = useState("");
+  const confirmationRef = useRef<HTMLDivElement>(null);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = Object.fromEntries(new FormData(event.currentTarget)) as Fields;
+  const composeEmail = (data: Fields) => {
     const from = data.organization ? `${data.name}, ${data.organization}` : data.name;
     const subject = `A problem worth solving — ${from}`;
     const signature = [data.name, data.organization, data.email].filter(Boolean);
     const body = [data.problem, "", "—", ...signature].join("\n");
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setComposed(true);
   };
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData) as Fields;
+
+    if (!endpoint) {
+      composeEmail(data);
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("sending");
+    formData.set("_subject", `A problem worth solving — ${data.organization || data.name}`);
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+      if (!response.ok) throw new Error(`Form service responded ${response.status}`);
+      setSender(data.name);
+      setStatus("sent");
+      form.reset();
+      requestAnimationFrame(() => confirmationRef.current?.focus());
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (endpoint && status === "sent") {
+    return (
+      <div ref={confirmationRef} className={styles.confirmation} tabIndex={-1} role="status">
+        <p className="meta">Received</p>
+        <p className={styles.thanks}>
+          Thank you{sender ? `, ${sender}` : ""}. Your message is with Norns.
+        </p>
+        <p className={styles.hint}>Replies come from {email}.</p>
+      </div>
+    );
+  }
+
   return (
-    <form className={styles.form} action={`mailto:${email}`} method="post" encType="text/plain" onSubmit={onSubmit}>
+    <form
+      className={styles.form}
+      action={endpoint ?? `mailto:${email}`}
+      method="post"
+      encType={endpoint ? undefined : "text/plain"}
+      onSubmit={onSubmit}
+      aria-busy={status === "sending"}
+    >
       <div className={styles.field}>
         <label className="meta" htmlFor={`${id}-name`}>
           Name
@@ -57,14 +106,30 @@ export function ContactForm({ email }: { email: string }) {
         <textarea className={`${styles.input} ${styles.area}`} id={`${id}-problem`} name="problem" rows={6} required />
       </div>
 
+      {/* Spam trap: invisible to people, filled in by bots. */}
+      {endpoint ? (
+        <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className={styles.trap} aria-hidden="true" />
+      ) : null}
+
       <div className={styles.actions}>
-        <button type="submit" className={`link ${styles.submit}`}>
-          Send to Norns <span className="arrow arrow--right" aria-hidden="true">→</span>
+        <button type="submit" className={`link ${styles.submit}`} disabled={status === "sending"}>
+          {status === "sending" ? "Sending…" : "Send to Norns"}{" "}
+          <span className="arrow arrow--right" aria-hidden="true">
+            →
+          </span>
         </button>
-        <p className={styles.hint} id={`${id}-hint`} aria-live="polite">
-          {composed
-            ? `Your email client should now be open with the message addressed to ${email}.`
-            : "Opens your email client with the message ready to send."}
+        <p className={styles.hint} aria-live="polite">
+          {status === "error" ? (
+            <span className={styles.error}>
+              The message didn&rsquo;t go through. Please try again, or write to {email}.
+            </span>
+          ) : endpoint ? (
+            `Delivered directly to ${email}.`
+          ) : status === "sent" ? (
+            `Your email client should now be open with the message addressed to ${email}.`
+          ) : (
+            "Opens your email client with the message ready to send."
+          )}
         </p>
       </div>
     </form>

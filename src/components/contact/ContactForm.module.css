@@ -59,3 +59,40 @@
   font-size: var(--fs-small);
   color: var(--c-text-2);
 }
+
+.submit:disabled {
+  cursor: progress;
+  color: var(--c-text-2);
+}
+
+.error {
+  color: var(--c-paper);
+}
+
+/* Spam trap: kept out of sight and out of the tab order. */
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.confirmation {
+  display: grid;
+  row-gap: var(--s-4);
+  align-content: start;
+  padding-top: var(--s-6);
+  border-top: var(--hairline) solid var(--c-line-strong);
+}
+
+.confirmation:focus {
+  outline: none;
+}
+
+.thanks {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tr-heading);
+  max-width: 20ch;
+}

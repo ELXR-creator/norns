@@ -13,11 +13,13 @@ export const site = {
   statement: ["The future isn't predicted.", "It's constructed."] as const,
   founder: "Piyush Jha",
   year: 2026,
-  /**
-   * The inbox that receives enquiries from /contact.
-   * TODO(norns): confirm this address exists before launch.
-   */
+  /** The inbox that receives enquiries. */
   contactEmail: "hello@norns.ltd",
+  /**
+   * Formspree endpoint (https://formspree.io/f/…) that delivers the contact
+   * form to contactEmail. Empty: the form opens the visitor's mail client.
+   */
+  formEndpoint: "",
 } as const;
 
 export type NavItem = { label: string; href: string; note?: string };
