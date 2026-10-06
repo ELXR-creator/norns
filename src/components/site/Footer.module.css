@@ -5,10 +5,10 @@
   border-top: var(--hairline) solid var(--c-line);
 }
 
-/* Under the homepage's final screen there is no seam: the footer is part
-   of that frame. */
+/* On the homepage the final screen carries the footer inside the mark,
+   so this one stands down. */
 :global(main:has([data-final])) + .footer {
-  border-top-color: transparent;
+  display: none;
 }
 
 .inner {
