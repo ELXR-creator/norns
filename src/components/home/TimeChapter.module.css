@@ -1,19 +1,19 @@
-.approach {
+.time {
   padding-block: clamp(6rem, 18vh, 14rem) clamp(4rem, 10vh, 8rem);
 }
 
 .list {
   display: grid;
-  row-gap: clamp(7rem, 24vh, 16rem);
+  row-gap: clamp(9rem, 30vh, 20rem);
 }
 
-.stage {
+.moment {
   display: grid;
   justify-self: start;
   row-gap: var(--s-5);
 }
 
-.label {
+.when {
   display: flex;
   gap: var(--s-4);
   transition: color var(--dur-4) var(--ease-standard);
@@ -31,30 +31,23 @@
   transition: color var(--dur-4) var(--ease-standard);
 }
 
-.detail {
-  max-width: 30ch;
-  color: var(--c-text-2);
-  transition: color var(--dur-4) var(--ease-standard);
-}
-
-/* Once the band is tracking, only the stage in focus is lit. */
-[data-focus-ready] .stage:not([data-present]) .line {
+/* Once the band is tracking, only the present is lit. */
+[data-focus-ready] .moment:not([data-present]) .line {
   color: var(--c-text-3);
 }
 
-[data-focus-ready] .stage:not([data-present]) .label,
-[data-focus-ready] .stage:not([data-present]) .detail {
+[data-focus-ready] .moment:not([data-present]) .when {
   color: var(--c-text-3);
 }
 
-/* Discovery sits at the left edge, delivery at the right: reading the
-   chapter carries the eye across the page, the way an engagement moves. */
+/* Past sits at the left edge, the future at the right: reading the chapter
+   carries the eye across the page, the way time carries the work. */
 @media (min-width: 720px) {
-  .stage:nth-child(2) {
+  .moment:nth-child(2) {
     justify-self: center;
   }
 
-  .stage:nth-child(3) {
+  .moment:nth-child(3) {
     justify-self: end;
   }
 }
