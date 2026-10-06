@@ -24,10 +24,6 @@ export function CompanyChapter() {
               <dt className="meta">Leadership</dt>
               <dd>Founded and led by {site.founder}.</dd>
             </div>
-            <div className={styles.fact}>
-              <dt className="meta">Entity</dt>
-              <dd>{site.legalName}</dd>
-            </div>
           </dl>
         </div>
       </div>

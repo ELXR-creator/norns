@@ -4,7 +4,8 @@
 
 export const site = {
   name: "Norns",
-  legalName: "Norns Ltd.",
+  /** Trading name. Change to the registered name (e.g. "Norns Ltd.") once incorporated. */
+  legalName: "Norns",
   domain: "norns.ltd",
   url: "https://norns.ltd",
   title: "Norns — Building What Comes Next",
@@ -28,7 +29,7 @@ export type NavItem = { label: string; href: string; note?: string };
 export const index: NavItem[] = [
   { label: "Work", href: "/#work", note: "Things being built" },
   { label: "Research", href: "/#research", note: "The archive" },
-  { label: "Company", href: "/#company", note: "Norns Ltd." },
+  { label: "Company", href: "/#company", note: "An independent company" },
   { label: "Contact", href: "/contact/", note: "Bring a problem" },
 ];
 
