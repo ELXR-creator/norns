@@ -68,7 +68,8 @@ export const work: WorkEntry[] = [
     year: 2026,
     visibility: "public",
     name: "Skema",
-    summary: "The first public product built at Norns.",
+    summary:
+      "A schema-governance platform: AI drafts schema changes from your documents, machines validate them, at least two parties sign each one, and every decision is kept with its evidence — so your data model becomes a governed, versioned, auditable shared language.",
     href: "https://skema.world/",
     cta: "Enter Skema",
     universe: { ground: "#16070d", ink: "#f4eef0", accent: "#8a1f43" },
