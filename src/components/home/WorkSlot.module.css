@@ -188,3 +188,13 @@
   height: 1em;
   flex: none;
 }
+
+.emblem {
+  width: clamp(4rem, 9vw, 8rem);
+  height: auto;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.cover:hover .emblem {
+  transform: scale(1.04);
+}

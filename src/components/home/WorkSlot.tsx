@@ -46,6 +46,12 @@ export function WorkSlot({ entry }: { entry: WorkEntry }) {
           {entry.visual ? (
             // eslint-disable-next-line @next/next/no-img-element -- static export, pre-optimised assets
             <img className={styles.visual} src={entry.visual.src} alt={entry.visual.alt} loading="lazy" decoding="async" />
+          ) : entry.logo ? (
+            // No picture of the product yet: its mark, on its own ground.
+            <a className={styles.cover} href={entry.href} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true">
+              {/* eslint-disable-next-line @next/next/no-img-element -- static export, pre-sized asset */}
+              <img className={styles.emblem} src={entry.logo.src} alt="" width={192} height={192} />
+            </a>
           ) : null}
         </div>
       )}

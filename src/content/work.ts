@@ -74,7 +74,6 @@ export const work: WorkEntry[] = [
     cta: "Enter Skema",
     universe: { ground: "#16070d", ink: "#f4eef0", accent: "#8a1f43" },
     logo: { src: "/work/skema/logo.png", alt: "" },
-    embed: { src: "https://skema.world/", title: "Skema — the live landing page" },
   },
   { id: "work-02", index: "02", year: 2026, visibility: "private" },
 ];
