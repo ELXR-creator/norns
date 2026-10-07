@@ -1,4 +1,5 @@
 import type { WorkEntry } from "@/content/work";
+import { WorkEmbed } from "./WorkEmbed";
 import styles from "./WorkSlot.module.css";
 
 /**
@@ -38,15 +39,23 @@ export function WorkSlot({ entry }: { entry: WorkEntry }) {
 
   return (
     <article className={styles.slot} data-visibility="public" style={universeStyle} aria-labelledby={`${entry.id}-name`}>
-      <div className={styles.frame}>
-        {entry.visual ? (
-          // eslint-disable-next-line @next/next/no-img-element -- static export, pre-optimised assets
-          <img className={styles.visual} src={entry.visual.src} alt={entry.visual.alt} loading="lazy" decoding="async" />
-        ) : null}
-      </div>
+      {entry.embed ? (
+        <WorkEmbed src={entry.embed.src} title={entry.embed.title} href={entry.href} logo={entry.logo?.src} />
+      ) : (
+        <div className={styles.frame}>
+          {entry.visual ? (
+            // eslint-disable-next-line @next/next/no-img-element -- static export, pre-optimised assets
+            <img className={styles.visual} src={entry.visual.src} alt={entry.visual.alt} loading="lazy" decoding="async" />
+          ) : null}
+        </div>
+      )}
       <div className={styles.caption}>
         <span className="meta">Work / {entry.index}</span>
         <h3 id={`${entry.id}-name`} className={styles.name}>
+          {entry.logo ? (
+            // eslint-disable-next-line @next/next/no-img-element -- static export, pre-sized asset
+            <img className={styles.logo} src={entry.logo.src} alt={entry.logo.alt} width={48} height={48} />
+          ) : null}
           {entry.name}
         </h3>
         <p className={styles.summary}>{entry.summary}</p>

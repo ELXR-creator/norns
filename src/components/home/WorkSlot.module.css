@@ -117,3 +117,74 @@
     inset: var(--s-5);
   }
 }
+
+/* --- A live page in the frame -------------------------------------------
+   Rendered at desktop width and scaled down; it fades in once loaded,
+   over the product's own ground and logo. */
+
+.live {
+  container-type: inline-size;
+}
+
+.cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.placeholder {
+  width: clamp(3rem, 8cqw, 6rem);
+  height: auto;
+}
+
+.embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--embed-h, 200%);
+  border: 0;
+  transform: scale(var(--embed-scale, 0.5));
+  transform-origin: 0 0;
+  background: var(--u-ground);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-4) var(--ease-out);
+}
+
+.embed[data-loaded] {
+  opacity: 1;
+}
+
+/* A hairline of the product's accent, drawn in on hover: the frame is a
+   way in. */
+.live::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--u-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-3) var(--ease-out);
+  pointer-events: none;
+}
+
+.live:hover::after {
+  transform: scaleX(1);
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.logo {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}

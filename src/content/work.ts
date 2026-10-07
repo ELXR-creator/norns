@@ -53,12 +53,28 @@ export type PublicWork = WorkBase & {
   cta?: string;
   universe: ProductUniverse;
   visual?: { src: string; alt: string };
+  /** The product's own logo, shown beside its name. */
+  logo?: { src: string; alt: string };
+  /** A live page shown in the frame, scaled down, for reference. */
+  embed?: { src: string; title: string };
 };
 
 export type WorkEntry = PrivateWork | PublicWork;
 
 export const work: WorkEntry[] = [
-  { id: "work-01", index: "01", year: 2026, visibility: "private" },
+  {
+    id: "skema",
+    index: "01",
+    year: 2026,
+    visibility: "public",
+    name: "Skema",
+    summary: "The first public product built at Norns.",
+    href: "https://skema.world/",
+    cta: "Enter Skema",
+    universe: { ground: "#16070d", ink: "#f4eef0", accent: "#8a1f43" },
+    logo: { src: "/work/skema/logo.png", alt: "" },
+    embed: { src: "https://skema.world/", title: "Skema — the live landing page" },
+  },
   { id: "work-02", index: "02", year: 2026, visibility: "private" },
 ];
 
