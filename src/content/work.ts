@@ -78,7 +78,7 @@ export const work: WorkEntry[] = [
     visual: {
       src: "/work/skema/collage.webp",
       srcSmall: "/work/skema/collage-4x3.webp",
-      alt: "Skema's graph of a schema around Organization, beside its decision log and a question put to the record.",
+      alt: "Skema's landing page — 'Nobody decided your schema. It accumulated.' — beside its graph view and its decision log.",
     },
   },
   { id: "work-02", index: "02", year: 2026, visibility: "private" },
