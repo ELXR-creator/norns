@@ -52,7 +52,8 @@ export type PublicWork = WorkBase & {
   href?: string;
   cta?: string;
   universe: ProductUniverse;
-  visual?: { src: string; alt: string };
+  /** `srcSmall`: a 4:3 composition for phones, where the frame is 4:3. */
+  visual?: { src: string; srcSmall?: string; alt: string };
   /** The product's own logo, shown beside its name. */
   logo?: { src: string; alt: string };
   /** A live page shown in the frame, scaled down, for reference. */
@@ -74,6 +75,11 @@ export const work: WorkEntry[] = [
     cta: "Enter Skema",
     universe: { ground: "#16070d", ink: "#f4eef0", accent: "#8a1f43" },
     logo: { src: "/work/skema/logo.png", alt: "" },
+    visual: {
+      src: "/work/skema/collage.webp",
+      srcSmall: "/work/skema/collage-4x3.webp",
+      alt: "Skema's graph of a schema around Organization, beside its decision log and a question put to the record.",
+    },
   },
   { id: "work-02", index: "02", year: 2026, visibility: "private" },
 ];

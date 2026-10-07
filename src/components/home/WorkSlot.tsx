@@ -44,8 +44,10 @@ export function WorkSlot({ entry }: { entry: WorkEntry }) {
       ) : (
         <div className={styles.frame}>
           {entry.visual ? (
-            // eslint-disable-next-line @next/next/no-img-element -- static export, pre-optimised assets
-            <img className={styles.visual} src={entry.visual.src} alt={entry.visual.alt} loading="lazy" decoding="async" />
+            <picture>
+              {entry.visual.srcSmall ? <source media="(max-width: 719px)" srcSet={entry.visual.srcSmall} /> : null}
+              <img className={styles.visual} src={entry.visual.src} alt={entry.visual.alt} loading="lazy" decoding="async" />
+            </picture>
           ) : entry.logo ? (
             // No picture of the product yet: its mark, on its own ground.
             <a className={styles.cover} href={entry.href} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true">
