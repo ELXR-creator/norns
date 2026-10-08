@@ -81,7 +81,24 @@ export const work: WorkEntry[] = [
       alt: "Skema's landing page — 'Nobody decided your schema. It accumulated.' — beside its graph view and its decision log.",
     },
   },
-  { id: "work-02", index: "02", year: 2026, visibility: "private" },
+  {
+    id: "forge",
+    index: "02",
+    year: 2026,
+    visibility: "public",
+    name: "Forge",
+    summary:
+      "A personal growth system for people who keep starting over: goals you can prove. Forge plans the goal with you, starts the first piece of work at once, records how well every piece of work is proven, and puts someone beside you who can see you showed up.",
+    href: "https://forgeos.net/",
+    cta: "Enter Forge",
+    universe: { ground: "#0a0910", ink: "#f2efe8", accent: "#f5a524" },
+    logo: { src: "/work/forge/logo.png", alt: "" },
+    visual: {
+      src: "/work/forge/cover.webp",
+      srcSmall: "/work/forge/cover-4x3.webp",
+      alt: "Forge — 'Goals you can prove.' — its proof ledger, today's anvil task, and the 100-task challenge on a phone.",
+    },
+  },
 ];
 
 /**
